@@ -305,10 +305,8 @@ footer span { color: #888; }
   MSc Dissertation BIM A+ (Erasmus+) · Marcos Batista · University of Minho / University of Ljubljana · 2025/2026
 </footer>
 
-<!-- ══ IFC.js via CDN ══ -->
-<script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
-<script src="https://unpkg.com/web-ifc@0.0.44/web-ifc-api.js"></script>
-<script src="https://unpkg.com/web-ifc-three@0.0.133/IFCLoader.js"></script>
+<!-- ══ Three.js via CDN ══ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script>
 // ══════════════════════════════════════════════════════════════
@@ -338,7 +336,7 @@ const FALLBACK = {
 // ══════════════════════════════════════════════════════════════
 //  THREE.JS + IFC.JS VIEWER
 // ══════════════════════════════════════════════════════════════
-let scene, camera, renderer, ifcLoader, model;
+let scene, camera, renderer, model;
 let wireframeMode = false;
 let viewerReady = false;
 let viewerStarted = false;
@@ -450,7 +448,8 @@ function initViewer() {
   // Load IFC
   loadIFC();
 
-  // Store updateCamera for reset
+  // Expose for module script
+  window._ifcScene = scene;
   window._updateCamera = updateCamera;
   window._spherical = spherical;
   window._target = target;
@@ -460,36 +459,79 @@ async function loadIFC() {
   const loadingEl = document.getElementById('ifc-loading');
   const loadingText = document.getElementById('ifc-loading-text');
   try {
-    ifcLoader = new IFCLoader();
-    await ifcLoader.ifcManager.setWasmPath('https://unpkg.com/web-ifc@0.0.44/');
-    loadingText.textContent = 'Parsing IFC geometry…';
-    model = await ifcLoader.loadAsync(IFC_FILE, xhr => {
-      if (xhr.total) {
-        const pct = Math.round(xhr.loaded / xhr.total * 100);
-        loadingText.textContent = 'Loading… ' + pct + '%';
+    loadingText.textContent = 'Fetching IFC file…';
+
+    // Use web-ifc via module CDN — more reliable on GitHub Pages
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.textContent = `
+      import { IfcAPI } from 'https://unpkg.com/web-ifc@0.0.44/web-ifc-api.js';
+      import * as THREE from 'https://unpkg.com/three@0.152.2/build/three.module.js';
+
+      const ifcAPI = new IfcAPI();
+      ifcAPI.SetWasmPath('https://unpkg.com/web-ifc@0.0.44/');
+      await ifcAPI.Init();
+
+      const response = await fetch('RIBEIRO.ifc');
+      const buffer = await response.arrayBuffer();
+      const data = new Uint8Array(buffer);
+      const modelID = ifcAPI.OpenModel(data);
+
+      const geometry = new THREE.BufferGeometry();
+      const vertices = [];
+      const colors = [];
+
+      const meshes = ifcAPI.LoadAllGeometry(modelID);
+      for (let i = 0; i < meshes.size(); i++) {
+        const mesh = meshes.get(i);
+        const placedGeometries = mesh.geometries;
+        for (let j = 0; j < placedGeometries.size(); j++) {
+          const pg = placedGeometries.get(j);
+          const geom = ifcAPI.GetGeometry(modelID, pg.geometryExpressID);
+          const verts = ifcAPI.GetVertexArray(geom.GetVertexData(), geom.GetVertexDataSize());
+          const inds = ifcAPI.GetIndexArray(geom.GetIndexData(), geom.GetIndexDataSize());
+          const mat = new THREE.Matrix4().fromArray(pg.flatTransformation);
+          const c = pg.color;
+          for (let k = 0; k < inds.length; k++) {
+            const idx = inds[k] * 6;
+            const v = new THREE.Vector3(verts[idx],verts[idx+1],verts[idx+2]).applyMatrix4(mat);
+            vertices.push(v.x, v.y, v.z);
+            colors.push(c.x, c.y, c.z);
+          }
+        }
       }
-    });
-    scene.add(model);
-    // Auto-fit camera to model
-    const box = new THREE.Box3().setFromObject(model);
-    const center = box.getCenter(new THREE.Vector3());
-    const size = box.getSize(new THREE.Vector3());
-    const maxDim = Math.max(size.x, size.y, size.z);
-    window._target.copy(center);
-    window._spherical.radius = maxDim * 1.8;
-    window._updateCamera();
-    loadingEl.style.display = 'none';
-    viewerReady = true;
+
+      geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+      geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+      geometry.computeVertexNormals();
+
+      const mat = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide });
+      const mesh3 = new THREE.Mesh(geometry, mat);
+      window._ifcScene.add(mesh3);
+      window._ifcModel = mesh3;
+
+      const box = new THREE.Box3().setFromObject(mesh3);
+      const center = box.getCenter(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3());
+      window._target.copy(center);
+      window._spherical.radius = Math.max(size.x,size.y,size.z)*1.8;
+      window._updateCamera();
+
+      document.getElementById('ifc-loading').style.display='none';
+    `;
+    document.head.appendChild(script);
+
   } catch(err) {
-    loadingText.textContent = 'Could not load ' + IFC_FILE + '. Make sure it is in the same folder as index.html.';
+    loadingText.textContent = 'Could not load RIBEIRO.ifc. Make sure it is in the same folder as index.html.';
     document.querySelector('#ifc-loading .spinner').style.display = 'none';
     console.error('IFC load error:', err);
   }
 }
 
 function resetCamera() {
-  if (!model) return;
-  const box = new THREE.Box3().setFromObject(model);
+  const m = window._ifcModel || model;
+  if (!m) return;
+  const box = new THREE.Box3().setFromObject(m);
   const center = box.getCenter(new THREE.Vector3());
   const size = box.getSize(new THREE.Vector3());
   window._target.copy(center);
@@ -500,12 +542,13 @@ function resetCamera() {
 }
 
 function toggleWireframe() {
-  if (!model) return;
+  const m = window._ifcModel || model;
+  if (!m) return;
   wireframeMode = !wireframeMode;
-  model.traverse(obj => {
+  m.traverse(obj => {
     if (obj.isMesh && obj.material) {
       (Array.isArray(obj.material) ? obj.material : [obj.material])
-        .forEach(m => { m.wireframe = wireframeMode; });
+        .forEach(mat => { mat.wireframe = wireframeMode; });
     }
   });
 }
