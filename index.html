@@ -305,14 +305,15 @@ footer span { color: #888; }
   MSc Dissertation BIM A+ (Erasmus+) · Marcos Batista · University of Minho / University of Ljubljana · 2025/2026
 </footer>
 
-<!-- ══ Three.js via CDN ══ -->
+<!-- ══ Three.js + GLTFLoader via CDN ══ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
 <script>
 // ══════════════════════════════════════════════════════════════
 //  CONFIG — set your IFC filename here
 // ══════════════════════════════════════════════════════════════
-const IFC_FILE = "RIBEIRO.ifc";
+const GLB_FILE = "RIBEIRO.glb";
 
 // ══════════════════════════════════════════════════════════════
 //  EMBEDDED FALLBACK DATA
@@ -446,7 +447,7 @@ function initViewer() {
   animate();
 
   // Load IFC
-  loadIFC();
+  loadGLB();
 
   // Expose for module script
   window._ifcScene = scene;
@@ -455,77 +456,38 @@ function initViewer() {
   window._target = target;
 }
 
-async function loadIFC() {
+function loadGLB() {
   const loadingEl = document.getElementById('ifc-loading');
   const loadingText = document.getElementById('ifc-loading-text');
-  try {
-    loadingText.textContent = 'Fetching IFC file…';
-
-    // Use web-ifc via module CDN — more reliable on GitHub Pages
-    const script = document.createElement('script');
-    script.type = 'module';
-    script.textContent = `
-      import { IfcAPI } from 'https://unpkg.com/web-ifc@0.0.44/web-ifc-api.js';
-      import * as THREE from 'https://unpkg.com/three@0.152.2/build/three.module.js';
-
-      const ifcAPI = new IfcAPI();
-      ifcAPI.SetWasmPath('https://unpkg.com/web-ifc@0.0.44/');
-      await ifcAPI.Init();
-
-      const response = await fetch('RIBEIRO.ifc');
-      const buffer = await response.arrayBuffer();
-      const data = new Uint8Array(buffer);
-      const modelID = ifcAPI.OpenModel(data);
-
-      const geometry = new THREE.BufferGeometry();
-      const vertices = [];
-      const colors = [];
-
-      const meshes = ifcAPI.LoadAllGeometry(modelID);
-      for (let i = 0; i < meshes.size(); i++) {
-        const mesh = meshes.get(i);
-        const placedGeometries = mesh.geometries;
-        for (let j = 0; j < placedGeometries.size(); j++) {
-          const pg = placedGeometries.get(j);
-          const geom = ifcAPI.GetGeometry(modelID, pg.geometryExpressID);
-          const verts = ifcAPI.GetVertexArray(geom.GetVertexData(), geom.GetVertexDataSize());
-          const inds = ifcAPI.GetIndexArray(geom.GetIndexData(), geom.GetIndexDataSize());
-          const mat = new THREE.Matrix4().fromArray(pg.flatTransformation);
-          const c = pg.color;
-          for (let k = 0; k < inds.length; k++) {
-            const idx = inds[k] * 6;
-            const v = new THREE.Vector3(verts[idx],verts[idx+1],verts[idx+2]).applyMatrix4(mat);
-            vertices.push(v.x, v.y, v.z);
-            colors.push(c.x, c.y, c.z);
-          }
-        }
-      }
-
-      geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-      geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-      geometry.computeVertexNormals();
-
-      const mat = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide });
-      const mesh3 = new THREE.Mesh(geometry, mat);
-      window._ifcScene.add(mesh3);
-      window._ifcModel = mesh3;
-
-      const box = new THREE.Box3().setFromObject(mesh3);
+  const loader = new THREE.GLTFLoader();
+  loadingText.textContent = 'Loading 3D model…';
+  loader.load(
+    GLB_FILE,
+    function(gltf) {
+      model = gltf.scene;
+      scene.add(model);
+      // Auto-fit camera to model bounding box
+      const box = new THREE.Box3().setFromObject(model);
       const center = box.getCenter(new THREE.Vector3());
       const size = box.getSize(new THREE.Vector3());
       window._target.copy(center);
-      window._spherical.radius = Math.max(size.x,size.y,size.z)*1.8;
+      window._spherical.radius = Math.max(size.x, size.y, size.z) * 1.8;
       window._updateCamera();
-
-      document.getElementById('ifc-loading').style.display='none';
-    `;
-    document.head.appendChild(script);
-
-  } catch(err) {
-    loadingText.textContent = 'Could not load RIBEIRO.ifc. Make sure it is in the same folder as index.html.';
-    document.querySelector('#ifc-loading .spinner').style.display = 'none';
-    console.error('IFC load error:', err);
-  }
+      loadingEl.style.display = 'none';
+      window._ifcModel = model;
+    },
+    function(xhr) {
+      if (xhr.total) {
+        const pct = Math.round(xhr.loaded / xhr.total * 100);
+        loadingText.textContent = 'Loading… ' + pct + '%';
+      }
+    },
+    function(err) {
+      loadingText.textContent = 'Could not load RIBEIRO.glb. Make sure it is in the same folder as index.html.';
+      document.querySelector('#ifc-loading .spinner').style.display = 'none';
+      console.error('GLB load error:', err);
+    }
+  );
 }
 
 function resetCamera() {
