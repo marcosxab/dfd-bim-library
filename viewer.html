@@ -10,7 +10,7 @@ html, body { width: 100%; height: 100%; background: #1a1a1a; overflow: hidden; }
   position: fixed; inset: 0; display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 14px;
   color: #888; font-family: Segoe UI, sans-serif; font-size: 13px;
-  background: #1a1a1a; z-index: 10;
+  background: #1a1a1a; z-index: 10; padding: 20px; text-align: center;
 }
 .spin {
   width: 30px; height: 30px; border: 3px solid #333;
@@ -21,41 +21,76 @@ html, body { width: 100%; height: 100%; background: #1a1a1a; overflow: hidden; }
 </style>
 </head>
 <body>
-<div id="msg"><div class="spin" id="spin"></div><div id="txt">Loading…</div></div>
+<div id="msg">
+  <div class="spin" id="spin"></div>
+  <div id="txt">Checking model file…</div>
+</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
-  onload="loadExtras()" onerror="err('Three.js CDN failed')"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/js/controls/OrbitControls.js"></script>
 
 <script>
-function err(m) {
-  document.getElementById('spin').style.display='none';
-  document.getElementById('txt').textContent = m;
+var txt  = document.getElementById('txt');
+var spin = document.getElementById('spin');
+var msg  = document.getElementById('msg');
+
+function showErr(m) {
+  spin.style.display = 'none';
+  txt.innerHTML = m;
 }
 
-function loadExtras() {
-  document.getElementById('txt').textContent = 'Loading loaders…';
-  var s1 = document.createElement('script');
-  s1.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js';
-  s1.onerror = function() { err('OrbitControls CDN failed'); };
-  s1.onload = function() {
-    var s2 = document.createElement('script');
-    s2.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
-    s2.onerror = function() { err('GLTFLoader CDN failed'); };
-    s2.onload = startViewer;
-    document.head.appendChild(s2);
-  };
-  document.head.appendChild(s1);
+// Step 1: fetch GLB manually to confirm it's accessible
+txt.textContent = 'Checking RIBEIRO.glb…';
+fetch('RIBEIRO.glb')
+  .then(function(r) {
+    if (!r.ok) { showErr('File error: HTTP ' + r.status + '<br>RIBEIRO.glb not found on server'); return; }
+    var size = r.headers.get('content-length');
+    txt.textContent = 'File OK (' + (size ? Math.round(size/1024) + ' KB' : '?') + ') — parsing…';
+    return r.arrayBuffer();
+  })
+  .then(function(buf) {
+    if (!buf) return;
+    txt.textContent = 'Parsing GLB (' + Math.round(buf.byteLength/1024) + ' KB)…';
+
+    // Step 2: load GLTFLoader from same CDN
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/js/loaders/GLTFLoader.js';
+    s.onerror = function() {
+      // GLTFLoader not on cdnjs — try jsdelivr
+      var s2 = document.createElement('script');
+      s2.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
+      s2.onerror = function() { showErr('GLTFLoader failed to load from both CDNs'); };
+      s2.onload  = function() { parseGLB(buf); };
+      document.head.appendChild(s2);
+    };
+    s.onload = function() { parseGLB(buf); };
+    document.head.appendChild(s);
+  })
+  .catch(function(e) {
+    showErr('Fetch failed: ' + e.message + '<br><small>This usually means the file is not in the repository.</small>');
+  });
+
+function parseGLB(buf) {
+  txt.textContent = 'Building scene…';
+
+  if (!THREE.GLTFLoader) {
+    showErr('THREE.GLTFLoader not available — CDN issue');
+    return;
+  }
+
+  var loader = new THREE.GLTFLoader();
+  loader.parse(buf, '', function(gltf) {
+    startScene(gltf);
+  }, function(e) {
+    showErr('GLB parse error: ' + (e.message || String(e)));
+  });
 }
 
-function startViewer() {
-  document.getElementById('txt').textContent = 'Starting viewer…';
-
+function startScene(gltf) {
   var scene = new THREE.Scene();
   scene.background = new THREE.Color(0x1a1a1a);
 
   var camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 0.01, 100000);
-  camera.position.set(30, 20, 30);
-
   var renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(innerWidth, innerHeight);
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -68,37 +103,21 @@ function startViewer() {
   var sun = new THREE.DirectionalLight(0xfff8f0, 1.0);
   sun.position.set(50, 100, 50);
   scene.add(sun);
+  scene.add(new THREE.GridHelper(500, 40, 0x333333, 0x222222));
 
-  var grid = new THREE.GridHelper(500, 40, 0x333333, 0x222222);
-  scene.add(grid);
+  var mat = new THREE.MeshLambertMaterial({ color: 0xC8B89A, side: THREE.DoubleSide });
+  gltf.scene.traverse(function(o) { if (o.isMesh) o.material = mat; });
+  scene.add(gltf.scene);
 
-  document.getElementById('txt').textContent = 'Loading model…';
+  var box    = new THREE.Box3().setFromObject(gltf.scene);
+  var center = box.getCenter(new THREE.Vector3());
+  var size   = box.getSize(new THREE.Vector3());
+  var d      = Math.max(size.x, size.y, size.z);
+  controls.target.copy(center);
+  camera.position.set(center.x + d*1.2, center.y + d*0.8, center.z + d*1.2);
+  controls.update();
 
-  new THREE.GLTFLoader().load(
-    'RIBEIRO.glb',
-    function(gltf) {
-      var mat = new THREE.MeshLambertMaterial({ color: 0xC8B89A, side: THREE.DoubleSide });
-      gltf.scene.traverse(function(o) { if (o.isMesh) o.material = mat; });
-      scene.add(gltf.scene);
-
-      var box    = new THREE.Box3().setFromObject(gltf.scene);
-      var center = box.getCenter(new THREE.Vector3());
-      var size   = box.getSize(new THREE.Vector3());
-      var d      = Math.max(size.x, size.y, size.z);
-      controls.target.copy(center);
-      camera.position.set(center.x+d*1.2, center.y+d*0.8, center.z+d*1.2);
-      controls.update();
-      grid.position.y = box.min.y;
-      document.getElementById('msg').style.display = 'none';
-    },
-    function(xhr) {
-      if (xhr.total)
-        document.getElementById('txt').textContent = 'Loading… ' + Math.round(xhr.loaded/xhr.total*100) + '%';
-    },
-    function(e) {
-      err('Model error: ' + (e.message||String(e)));
-    }
-  );
+  msg.style.display = 'none';
 
   window.addEventListener('resize', function() {
     camera.aspect = innerWidth/innerHeight;
