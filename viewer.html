@@ -70,8 +70,7 @@ function build(gltf) {
   scene.add(sun);
   scene.add(new THREE.GridHelper(500,40,0x333333,0x222222));
 
-  var mat = new THREE.MeshLambertMaterial({color:0xC8B89A, side:THREE.DoubleSide});
-  gltf.scene.traverse(function(o){ if(o.isMesh) o.material=mat.clone(); });
+  gltf.scene.traverse(function(o){ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true; } });
   scene.add(gltf.scene);
 
   var box    = new THREE.Box3().setFromObject(gltf.scene);
