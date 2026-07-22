@@ -2,16 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>3D Viewer</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { width: 100%; height: 100%; background: #1A1A1A; overflow: hidden; }
-#loading {
+* { margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; background: #1a1a1a; overflow: hidden; }
+#msg {
   position: fixed; inset: 0; display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 14px;
   color: #888; font-family: Segoe UI, sans-serif; font-size: 13px;
-  background: #1A1A1A; z-index: 10;
+  background: #1a1a1a; z-index: 10;
 }
 .spin {
   width: 30px; height: 30px; border: 3px solid #333;
@@ -22,122 +21,93 @@ html, body { width: 100%; height: 100%; background: #1A1A1A; overflow: hidden; }
 </style>
 </head>
 <body>
-<div id="loading">
-  <div class="spin" id="spin"></div>
-  <div id="loadmsg">Loading Three.js…</div>
-</div>
+<div id="msg"><div class="spin" id="spin"></div><div id="txt">Loading…</div></div>
 
-<!-- Three.js UMD — no importmap needed -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/GLTFLoader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+  onload="loadExtras()" onerror="err('Three.js CDN failed')"></script>
 
 <script>
-window.addEventListener('load', function() {
-  var loadmsg = document.getElementById('loadmsg');
-  var loading  = document.getElementById('loading');
-  var spin     = document.getElementById('spin');
+function err(m) {
+  document.getElementById('spin').style.display='none';
+  document.getElementById('txt').textContent = m;
+}
 
-  if (typeof THREE === 'undefined') {
-    spin.style.display = 'none';
-    loadmsg.textContent = 'Failed to load Three.js. Check your connection.';
-    return;
-  }
+function loadExtras() {
+  document.getElementById('txt').textContent = 'Loading loaders…';
+  var s1 = document.createElement('script');
+  s1.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js';
+  s1.onerror = function() { err('OrbitControls CDN failed'); };
+  s1.onload = function() {
+    var s2 = document.createElement('script');
+    s2.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
+    s2.onerror = function() { err('GLTFLoader CDN failed'); };
+    s2.onload = startViewer;
+    document.head.appendChild(s2);
+  };
+  document.head.appendChild(s1);
+}
 
-  loadmsg.textContent = 'Starting viewer…';
+function startViewer() {
+  document.getElementById('txt').textContent = 'Starting viewer…';
 
-  // Scene
   var scene = new THREE.Scene();
   scene.background = new THREE.Color(0x1a1a1a);
 
-  // Camera
-  var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 100000);
+  var camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 0.01, 100000);
   camera.position.set(30, 20, 30);
 
-  // Renderer
   var renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.shadowMap.enabled = true;
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   document.body.appendChild(renderer.domElement);
 
-  // Controls
   var controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
-  controls.dampingFactor = 0.08;
 
-  // Lights
   scene.add(new THREE.AmbientLight(0xffffff, 0.9));
   var sun = new THREE.DirectionalLight(0xfff8f0, 1.0);
   sun.position.set(50, 100, 50);
   scene.add(sun);
-  var fill = new THREE.DirectionalLight(0xc0d8ff, 0.4);
-  fill.position.set(-50, 30, -50);
-  scene.add(fill);
 
-  // Grid
   var grid = new THREE.GridHelper(500, 40, 0x333333, 0x222222);
   scene.add(grid);
 
-  // Default material with nice colour
-  var defaultMat = new THREE.MeshLambertMaterial({ color: 0xC8B89A, side: THREE.DoubleSide });
+  document.getElementById('txt').textContent = 'Loading model…';
 
-  // Load GLB
-  loadmsg.textContent = 'Loading 3D model…';
-  var loader = new THREE.GLTFLoader();
-  loader.load(
+  new THREE.GLTFLoader().load(
     'RIBEIRO.glb',
     function(gltf) {
-      // Apply material so model is visible (not white/black)
-      gltf.scene.traverse(function(obj) {
-        if (obj.isMesh) {
-          obj.material = defaultMat.clone();
-          obj.castShadow = true;
-          obj.receiveShadow = true;
-        }
-      });
-
+      var mat = new THREE.MeshLambertMaterial({ color: 0xC8B89A, side: THREE.DoubleSide });
+      gltf.scene.traverse(function(o) { if (o.isMesh) o.material = mat; });
       scene.add(gltf.scene);
 
-      // Fit camera
       var box    = new THREE.Box3().setFromObject(gltf.scene);
       var center = box.getCenter(new THREE.Vector3());
       var size   = box.getSize(new THREE.Vector3());
       var d      = Math.max(size.x, size.y, size.z);
-
       controls.target.copy(center);
-      camera.position.set(center.x + d * 1.2, center.y + d * 0.8, center.z + d * 1.2);
+      camera.position.set(center.x+d*1.2, center.y+d*0.8, center.z+d*1.2);
       controls.update();
       grid.position.y = box.min.y;
-
-      loading.style.display = 'none';
+      document.getElementById('msg').style.display = 'none';
     },
     function(xhr) {
-      if (xhr.total) {
-        loadmsg.textContent = 'Loading… ' + Math.round(xhr.loaded / xhr.total * 100) + '%';
-      }
+      if (xhr.total)
+        document.getElementById('txt').textContent = 'Loading… ' + Math.round(xhr.loaded/xhr.total*100) + '%';
     },
-    function(err) {
-      spin.style.display = 'none';
-      loadmsg.textContent = 'Error: ' + (err.message || String(err));
-      console.error(err);
+    function(e) {
+      err('Model error: ' + (e.message||String(e)));
     }
   );
 
-  // Resize
   window.addEventListener('resize', function() {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = innerWidth/innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(innerWidth, innerHeight);
   });
 
-  // Animate
-  (function loop() {
-    requestAnimationFrame(loop);
-    controls.update();
-    renderer.render(scene, camera);
-  })();
-});
+  (function loop() { requestAnimationFrame(loop); controls.update(); renderer.render(scene, camera); })();
+}
 </script>
 </body>
 </html>
