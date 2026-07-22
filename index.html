@@ -155,31 +155,7 @@ header { background: var(--dark); color: white; }
 .viewer-panel { flex: 1; position: relative; display: none; }
 .viewer-panel.active { display: flex; flex-direction: column; }
 
-/* IFC viewer canvas */
-#ifc-container { flex: 1; position: relative; }
-#ifc-container canvas { display: block; width: 100% !important; height: 100% !important; }
-.viewer-loading {
-  position: absolute; inset: 0; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 12px;
-  background: #111; color: #666; font-size: 12px; z-index: 10;
-}
-.viewer-loading .spinner {
-  width: 32px; height: 32px; border: 3px solid #333;
-  border-top-color: var(--red); border-radius: 50%;
-  animation: spin .8s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.viewer-controls {
-  padding: 8px 12px; background: #1A1A1A; border-top: 1px solid #222;
-  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
-}
-.vctrl-btn {
-  padding: 4px 10px; background: #2A2A2A; border: 1px solid #333;
-  color: #AAA; border-radius: 4px; font-size: 10px; cursor: pointer;
-  font-weight: 600; transition: all .15s;
-}
-.vctrl-btn:hover { background: #333; color: white; }
-.vctrl-label { font-size: 10px; color: #555; margin-left: auto; }
+
 
 
 
@@ -282,17 +258,17 @@ footer span { color: #888; }
 
         <!-- 3D VIEWER PANEL -->
         <div class="viewer-panel active" id="panel-3d">
-          <div id="ifc-container">
-            <div class="viewer-loading" id="ifc-loading">
-              <div class="spinner"></div>
-              <div id="ifc-loading-text">Loading 3D model…</div>
-            </div>
-          </div>
-          <div class="viewer-controls">
-            <button class="vctrl-btn" onclick="resetCamera()">Reset View</button>
-            <button class="vctrl-btn" onclick="toggleWireframe()">Wireframe</button>
-            <span class="vctrl-label" id="viewer-hint">Drag to rotate · Scroll to zoom · Right-drag to pan</span>
-          </div>
+          <model-viewer
+            src="RIBEIRO.glb"
+            camera-controls
+            auto-rotate
+            auto-rotate-delay="0"
+            rotation-per-second="20deg"
+            style="width:100%;height:100%;min-height:420px;background:#111;"
+            shadow-intensity="1"
+            environment-image="neutral">
+            <div slot="progress-bar"></div>
+          </model-viewer>
         </div>
         </div>
       </div>
@@ -305,9 +281,7 @@ footer span { color: #888; }
   MSc Dissertation BIM A+ (Erasmus+) · Marcos Batista · University of Minho / University of Ljubljana · 2025/2026
 </footer>
 
-<!-- ══ Three.js + GLTFLoader via CDN ══ -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/GLTFLoader.js"></script>
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
 <script>
 // ══════════════════════════════════════════════════════════════
@@ -334,186 +308,8 @@ const FALLBACK = {
   }
 };
 
-// ══════════════════════════════════════════════════════════════
-//  THREE.JS + IFC.JS VIEWER
-// ══════════════════════════════════════════════════════════════
-let scene, camera, renderer, model;
-let wireframeMode = false;
-let viewerReady = false;
-let viewerStarted = false;
-let animFrameId = null;
-
-function initViewer() {
-  if (viewerStarted) return;
-  viewerStarted = true;
-
-  const container = document.getElementById('ifc-container');
-  const w = container.clientWidth || 500;
-  const h = container.clientHeight || 400;
-
-  // Scene
-  scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x111111);
-
-  // Camera
-  camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 10000);
-  camera.position.set(20, 15, 20);
-  camera.lookAt(0, 0, 0);
-
-  // Renderer
-  renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(w, h);
-  renderer.setPixelRatio(window.devicePixelRatio);
-  container.appendChild(renderer.domElement);
-
-  // Lights
-  const ambLight = new THREE.AmbientLight(0xffffff, 0.6);
-  scene.add(ambLight);
-  const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-  dirLight.position.set(50, 80, 50);
-  scene.add(dirLight);
-  const dirLight2 = new THREE.DirectionalLight(0x8888ff, 0.3);
-  dirLight2.position.set(-50, 20, -50);
-  scene.add(dirLight2);
-
-  // Grid
-  const grid = new THREE.GridHelper(100, 20, 0x333333, 0x222222);
-  scene.add(grid);
-
-  // Mouse controls (simple orbit)
-  let isDragging = false, isRightDrag = false;
-  let prevX = 0, prevY = 0;
-  let spherical = { theta: Math.PI/4, phi: Math.PI/3, radius: 40 };
-  let target = new THREE.Vector3(0, 0, 0);
-
-  function updateCamera() {
-    camera.position.set(
-      target.x + spherical.radius * Math.sin(spherical.phi) * Math.sin(spherical.theta),
-      target.y + spherical.radius * Math.cos(spherical.phi),
-      target.z + spherical.radius * Math.sin(spherical.phi) * Math.cos(spherical.theta)
-    );
-    camera.lookAt(target);
-  }
-  updateCamera();
-
-  renderer.domElement.addEventListener('mousedown', e => {
-    isDragging = true;
-    isRightDrag = e.button === 2;
-    prevX = e.clientX; prevY = e.clientY;
-    e.preventDefault();
-  });
-  window.addEventListener('mouseup', () => isDragging = false);
-  window.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    const dx = e.clientX - prevX;
-    const dy = e.clientY - prevY;
-    prevX = e.clientX; prevY = e.clientY;
-    if (isRightDrag) {
-      const panSpeed = spherical.radius * 0.001;
-      const right = new THREE.Vector3().crossVectors(
-        new THREE.Vector3(0,1,0),
-        new THREE.Vector3().subVectors(camera.position, target).normalize()
-      ).normalize();
-      const up = new THREE.Vector3(0,1,0);
-      target.addScaledVector(right, dx * panSpeed);
-      target.addScaledVector(up, -dy * panSpeed);
-    } else {
-      spherical.theta -= dx * 0.01;
-      spherical.phi = Math.max(0.1, Math.min(Math.PI - 0.1, spherical.phi - dy * 0.01));
-    }
-    updateCamera();
-  });
-  renderer.domElement.addEventListener('wheel', e => {
-    spherical.radius = Math.max(2, spherical.radius * (1 + e.deltaY * 0.001));
-    updateCamera(); e.preventDefault();
-  }, { passive: false });
-  renderer.domElement.addEventListener('contextmenu', e => e.preventDefault());
-
-  // Resize
-  const resizeObs = new ResizeObserver(() => {
-    const w = container.clientWidth;
-    const h = container.clientHeight;
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setSize(w, h);
-  });
-  resizeObs.observe(container);
-
-  // Animate
-  function animate() {
-    animFrameId = requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  // Load IFC
-  loadGLB();
-
-  // Expose for module script
-  window._ifcScene = scene;
-  window._updateCamera = updateCamera;
-  window._spherical = spherical;
-  window._target = target;
-}
-
-function loadGLB() {
-  const loadingEl = document.getElementById('ifc-loading');
-  const loadingText = document.getElementById('ifc-loading-text');
-  const loader = new THREE.GLTFLoader();
-  loadingText.textContent = 'Loading 3D model…';
-  loader.load(
-    GLB_FILE,
-    function(gltf) {
-      model = gltf.scene;
-      scene.add(model);
-      // Auto-fit camera to model bounding box
-      const box = new THREE.Box3().setFromObject(model);
-      const center = box.getCenter(new THREE.Vector3());
-      const size = box.getSize(new THREE.Vector3());
-      window._target.copy(center);
-      window._spherical.radius = Math.max(size.x, size.y, size.z) * 1.8;
-      window._updateCamera();
-      loadingEl.style.display = 'none';
-      window._ifcModel = model;
-    },
-    function(xhr) {
-      if (xhr.total) {
-        const pct = Math.round(xhr.loaded / xhr.total * 100);
-        loadingText.textContent = 'Loading… ' + pct + '%';
-      }
-    },
-    function(err) {
-      loadingText.textContent = 'Could not load RIBEIRO.glb. Make sure it is in the same folder as index.html.';
-      document.querySelector('#ifc-loading .spinner').style.display = 'none';
-      console.error('GLB load error:', err);
-    }
-  );
-}
-
-function resetCamera() {
-  const m = window._ifcModel || model;
-  if (!m) return;
-  const box = new THREE.Box3().setFromObject(m);
-  const center = box.getCenter(new THREE.Vector3());
-  const size = box.getSize(new THREE.Vector3());
-  window._target.copy(center);
-  window._spherical.radius = Math.max(size.x, size.y, size.z) * 1.8;
-  window._spherical.theta = Math.PI / 4;
-  window._spherical.phi = Math.PI / 3;
-  window._updateCamera();
-}
-
-function toggleWireframe() {
-  const m = window._ifcModel || model;
-  if (!m) return;
-  wireframeMode = !wireframeMode;
-  m.traverse(obj => {
-    if (obj.isMesh && obj.material) {
-      (Array.isArray(obj.material) ? obj.material : [obj.material])
-        .forEach(mat => { mat.wireframe = wireframeMode; });
-    }
-  });
-}
+function resetCamera() {}
+function toggleWireframe() {}
 
 
 
@@ -697,7 +493,7 @@ function openM(idx) {
   document.getElementById('mfields').scrollTop=0;
 
   // Start viewer on first open
-  if (!viewerStarted) { setTimeout(initViewer, 50); }
+
 
   document.getElementById('overlay').classList.add('open');
 }
