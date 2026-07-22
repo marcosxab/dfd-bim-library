@@ -10,103 +10,68 @@ html, body { width: 100%; height: 100%; background: #1a1a1a; overflow: hidden; }
   position: fixed; inset: 0; display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 14px;
   color: #888; font-family: Segoe UI, sans-serif; font-size: 13px;
-  background: #1a1a1a; z-index: 10; padding: 20px; text-align: center;
+  background: #1a1a1a; z-index: 10;
 }
-.spin {
-  width: 30px; height: 30px; border: 3px solid #333;
-  border-top-color: #E8192C; border-radius: 50%;
-  animation: s .8s linear infinite;
-}
-@keyframes s { to { transform: rotate(360deg); } }
+.spin { width:30px; height:30px; border:3px solid #333;
+  border-top-color:#E8192C; border-radius:50%;
+  animation:s .8s linear infinite; }
+@keyframes s { to { transform:rotate(360deg); } }
 </style>
 </head>
 <body>
-<div id="msg">
-  <div class="spin" id="spin"></div>
-  <div id="txt">Checking model file…</div>
-</div>
+<div id="msg"><div class="spin" id="spin"></div><div id="txt">Loading…</div></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/js/controls/OrbitControls.js"></script>
+<!-- Three r134 — known good with UMD examples -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
 
 <script>
 var txt  = document.getElementById('txt');
 var spin = document.getElementById('spin');
 var msg  = document.getElementById('msg');
 
-function showErr(m) {
-  spin.style.display = 'none';
-  txt.innerHTML = m;
-}
+function die(m) { spin.style.display='none'; txt.innerHTML=m; }
 
-// Step 1: fetch GLB manually to confirm it's accessible
-txt.textContent = 'Checking RIBEIRO.glb…';
-fetch('RIBEIRO.glb')
-  .then(function(r) {
-    if (!r.ok) { showErr('File error: HTTP ' + r.status + '<br>RIBEIRO.glb not found on server'); return; }
-    var size = r.headers.get('content-length');
-    txt.textContent = 'File OK (' + (size ? Math.round(size/1024) + ' KB' : '?') + ') — parsing…';
-    return r.arrayBuffer();
-  })
-  .then(function(buf) {
-    if (!buf) return;
-    txt.textContent = 'Parsing GLB (' + Math.round(buf.byteLength/1024) + ' KB)…';
+window.addEventListener('load', function() {
+  if (!THREE)           return die('THREE not loaded');
+  if (!THREE.OrbitControls) return die('OrbitControls not loaded');
+  if (!THREE.GLTFLoader)    return die('GLTFLoader not loaded');
 
-    // Step 2: load GLTFLoader from same CDN
-    var s = document.createElement('script');
-    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/js/loaders/GLTFLoader.js';
-    s.onerror = function() {
-      // GLTFLoader not on cdnjs — try jsdelivr
-      var s2 = document.createElement('script');
-      s2.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
-      s2.onerror = function() { showErr('GLTFLoader failed to load from both CDNs'); };
-      s2.onload  = function() { parseGLB(buf); };
-      document.head.appendChild(s2);
-    };
-    s.onload = function() { parseGLB(buf); };
-    document.head.appendChild(s);
-  })
-  .catch(function(e) {
-    showErr('Fetch failed: ' + e.message + '<br><small>This usually means the file is not in the repository.</small>');
-  });
+  txt.textContent = 'Fetching model…';
 
-function parseGLB(buf) {
-  txt.textContent = 'Building scene…';
+  fetch('RIBEIRO.glb')
+    .then(function(r) {
+      if (!r.ok) return die('HTTP '+r.status+' — RIBEIRO.glb not found');
+      txt.textContent = 'Parsing…';
+      return r.arrayBuffer();
+    })
+    .then(function(buf) {
+      new THREE.GLTFLoader().parse(buf, '', build, function(e){ die('Parse error: '+(e.message||e)); });
+    })
+    .catch(function(e){ die('Fetch error: '+e.message); });
+});
 
-  if (!THREE.GLTFLoader) {
-    showErr('THREE.GLTFLoader not available — CDN issue');
-    return;
-  }
-
-  var loader = new THREE.GLTFLoader();
-  loader.parse(buf, '', function(gltf) {
-    startScene(gltf);
-  }, function(e) {
-    showErr('GLB parse error: ' + (e.message || String(e)));
-  });
-}
-
-function startScene(gltf) {
-  var scene = new THREE.Scene();
+function build(gltf) {
+  var scene    = new THREE.Scene();
   scene.background = new THREE.Color(0x1a1a1a);
-
-  var camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 0.01, 100000);
-  var renderer = new THREE.WebGLRenderer({ antialias: true });
+  var camera   = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 0.01, 100000);
+  var renderer = new THREE.WebGLRenderer({antialias:true});
   renderer.setSize(innerWidth, innerHeight);
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   document.body.appendChild(renderer.domElement);
 
   var controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
 
   scene.add(new THREE.AmbientLight(0xffffff, 0.9));
-  var sun = new THREE.DirectionalLight(0xfff8f0, 1.0);
-  sun.position.set(50, 100, 50);
+  var sun = new THREE.DirectionalLight(0xfffaf0, 1.0);
+  sun.position.set(50,100,50);
   scene.add(sun);
-  scene.add(new THREE.GridHelper(500, 40, 0x333333, 0x222222));
+  scene.add(new THREE.GridHelper(500,40,0x333333,0x222222));
 
-  var mat = new THREE.MeshLambertMaterial({ color: 0xC8B89A, side: THREE.DoubleSide });
-  gltf.scene.traverse(function(o) { if (o.isMesh) o.material = mat; });
+  var mat = new THREE.MeshLambertMaterial({color:0xC8B89A, side:THREE.DoubleSide});
+  gltf.scene.traverse(function(o){ if(o.isMesh) o.material=mat.clone(); });
   scene.add(gltf.scene);
 
   var box    = new THREE.Box3().setFromObject(gltf.scene);
@@ -114,18 +79,18 @@ function startScene(gltf) {
   var size   = box.getSize(new THREE.Vector3());
   var d      = Math.max(size.x, size.y, size.z);
   controls.target.copy(center);
-  camera.position.set(center.x + d*1.2, center.y + d*0.8, center.z + d*1.2);
+  camera.position.set(center.x+d*1.5, center.y+d*0.9, center.z+d*1.5);
   controls.update();
 
   msg.style.display = 'none';
 
-  window.addEventListener('resize', function() {
+  window.addEventListener('resize', function(){
     camera.aspect = innerWidth/innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight);
   });
 
-  (function loop() { requestAnimationFrame(loop); controls.update(); renderer.render(scene, camera); })();
+  (function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera); })();
 }
 </script>
 </body>
