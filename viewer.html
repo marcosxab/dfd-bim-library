@@ -7,26 +7,103 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 100%; height: 100%; background: #111; overflow: hidden; }
-  model-viewer {
-    width: 100%;
-    height: 100%;
-    background-color: #111;
-    --poster-color: #111;
+  canvas { display: block; }
+  #msg {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    color: #888; font-family: 'Segoe UI', sans-serif; font-size: 13px;
+    text-align: center; line-height: 1.8; pointer-events: none;
   }
+  #spinner {
+    width: 28px; height: 28px; border: 3px solid #333;
+    border-top-color: #E8192C; border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
-<script type="module" src="https://unpkg.com/@google/model-viewer@3.3.0/dist/model-viewer.min.js"></script>
 </head>
 <body>
-  <model-viewer
-    src="RIBEIRO.glb"
-    alt="Fazenda São José de Mipibu — BIM Model"
-    camera-controls
-    auto-rotate
-    auto-rotate-delay="1000"
-    rotation-per-second="15deg"
-    shadow-intensity="1"
-    exposure="1"
-    tone-mapping="commerce">
-  </model-viewer>
+<div id="msg"><div id="spinner"></div><div id="msg-text">Loading 3D model…</div></div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const msgEl     = document.getElementById('msg');
+const msgText   = document.getElementById('msg-text');
+const spinnerEl = document.getElementById('spinner');
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x111111);
+
+const camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.01, 100000);
+camera.position.set(30, 20, 30);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+document.body.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+const sun = new THREE.DirectionalLight(0xfff8f0, 1.2);
+sun.position.set(100, 200, 100);
+scene.add(sun);
+const fill = new THREE.DirectionalLight(0xc0d8ff, 0.4);
+fill.position.set(-100, 50, -100);
+scene.add(fill);
+
+const grid = new THREE.GridHelper(500, 50, 0x333333, 0x222222);
+scene.add(grid);
+
+new GLTFLoader().load(
+  'RIBEIRO.glb',
+  (gltf) => {
+    scene.add(gltf.scene);
+    const box    = new THREE.Box3().setFromObject(gltf.scene);
+    const center = box.getCenter(new THREE.Vector3());
+    const size   = box.getSize(new THREE.Vector3());
+    const maxDim = Math.max(size.x, size.y, size.z);
+    controls.target.copy(center);
+    camera.position.set(center.x + maxDim*1.2, center.y + maxDim*0.8, center.z + maxDim*1.2);
+    controls.update();
+    grid.position.y = box.min.y;
+    msgEl.style.display = 'none';
+  },
+  (xhr) => {
+    if (xhr.total) msgText.textContent = `Loading… ${Math.round(xhr.loaded/xhr.total*100)}%`;
+  },
+  (err) => {
+    spinnerEl.style.display = 'none';
+    msgText.innerHTML = `Could not load model.<br><small style="color:#555">${err.message||err}</small>`;
+  }
+);
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+(function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+})();
+</script>
 </body>
 </html>
