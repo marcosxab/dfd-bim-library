@@ -131,16 +131,29 @@ function build(gltf) {
   (function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera); })();
 }
 
+function nodeMatchesId(obj, id) {
+  // Walk up the parent chain looking for a node named with the passport ID
+  var current = obj;
+  while (current) {
+    if (current.name === id) return true;
+    current = current.parent;
+  }
+  return false;
+}
+
 function highlightElement(passportId) {
   if (!sceneRef || !passportId) return;
+  var found = 0;
+  sceneRef.traverse(function(obj) {
+    if (obj.isMesh && nodeMatchesId(obj, passportId)) found++;
+  });
+  console.log('[DfD Viewer] highlight:', passportId, '| meshes found:', found);
   sceneRef.traverse(function(obj) {
     if (!obj.isMesh) return;
-    // Respect layer visibility
-    if (obj.parent && !obj.parent.visible) return;
     var orig = origMats.get(obj.uuid);
     if (!orig) return;
     var mat = orig.clone();
-    if (obj.parent && obj.parent.name === passportId) {
+    if (nodeMatchesId(obj, passportId)) {
       // This element is selected — full highlight
       mat.emissive          = new THREE.Color(0.35, 0.18, 0.0);
       mat.emissiveIntensity = 1.0;
