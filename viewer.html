@@ -155,7 +155,7 @@ function highlightElement(passportId) {
     var mat = orig.clone();
     if (nodeMatchesId(obj, passportId)) {
       // This element is selected — full highlight
-      mat.emissive          = new THREE.Color(0.35, 0.18, 0.0);
+      mat.emissive          = new THREE.Color(0.0, 0.3, 0.8);
       mat.emissiveIntensity = 1.0;
       mat.transparent       = false;
       mat.opacity           = 1.0;
