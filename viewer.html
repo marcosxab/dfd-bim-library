@@ -156,13 +156,14 @@ function applyHighlight(targetLayer) {
       if (!orig) return;
       var mat = orig.clone();
       if (name === targetLayer) {
-        mat.emissive    = new THREE.Color(0.12, 0.06, 0.0);
-        mat.transparent = false;
-        mat.opacity     = 1.0;
+        mat.emissive      = new THREE.Color(0.35, 0.18, 0.0);
+        mat.emissiveIntensity = 1.0;
+        mat.transparent   = false;
+        mat.opacity       = 1.0;
       } else {
-        mat.transparent = true;
-        mat.opacity     = 0.18;
-        mat.emissive    = new THREE.Color(0, 0, 0);
+        mat.transparent   = true;
+        mat.opacity       = 0.08;
+        mat.emissive      = new THREE.Color(0, 0, 0);
       }
       obj.material = mat;
     });
