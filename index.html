@@ -490,6 +490,12 @@ function openM(idx) {
 
 
   document.getElementById('overlay').classList.add('open');
+
+  // Send highlight message to the 3D viewer iframe
+  var iframe = document.querySelector('#panel-3d iframe');
+  if (iframe && iframe.contentWindow) {
+    iframe.contentWindow.postMessage({ type: 'highlight', name: e.element_name || '' }, '*');
+  }
 }
 
 function sg(title,rows) {
@@ -498,7 +504,13 @@ function sg(title,rows) {
 }
 function fv(k,v){ return v?`<div class="field"><div class="fkey">${k}</div><div class="fval">${v}</div></div>`:''; }
 function closeMO(e){ if(e.target===document.getElementById('overlay')) closeM(); }
-function closeM(){ document.getElementById('overlay').classList.remove('open'); }
+function closeM(){
+  document.getElementById('overlay').classList.remove('open');
+  var iframe = document.querySelector('#panel-3d iframe');
+  if (iframe && iframe.contentWindow) {
+    iframe.contentWindow.postMessage({ type: 'reset' }, '*');
+  }
+}
 function fmtCat(c){ return {IfcDoor:'Door',IfcWindow:'Window',IfcWall:'Wall',IfcSlab:'Slab',IfcColumn:'Column',IfcBeam:'Beam'}[c]||c; }
 function getClass(s){ if(s>=0.75)return'A — Excellent';if(s>=0.55)return'B — Good';if(s>=0.35)return'C — Moderate';if(s>=0.15)return'D — Difficult';return'E — Not reusable'; }
 </script>
