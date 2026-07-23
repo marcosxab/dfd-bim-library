@@ -6,7 +6,6 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; height: 100%; background: #1a1a1a; overflow: hidden; font-family: Segoe UI, sans-serif; }
-
 #msg {
   position: fixed; inset: 0; display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 14px;
@@ -16,27 +15,9 @@ html, body { width: 100%; height: 100%; background: #1a1a1a; overflow: hidden; f
   border-top-color:#E8192C; border-radius:50%;
   animation:s .8s linear infinite; }
 @keyframes s { to { transform:rotate(360deg); } }
-
-/* Label bar — shown when a card is clicked */
-#label-bar {
-  position: fixed; top: 0; left: 0; right: 0;
-  background: rgba(232,25,44,0.92); color: white;
-  padding: 7px 14px; font-size: 12px; font-weight: 700;
-  letter-spacing: 0.3px; z-index: 20;
-  display: none; align-items: center; gap: 10px;
-}
-#label-bar.visible { display: flex; }
-#label-text { flex: 1; }
-#label-close {
-  cursor: pointer; font-size: 16px; opacity: 0.8; line-height: 1;
-  background: none; border: none; color: white;
-}
-#label-close:hover { opacity: 1; }
-
-/* Layer toggle buttons */
 #layers {
   position: fixed; bottom: 0; left: 0; right: 0;
-  background: rgba(20,20,20,0.92); padding: 8px 12px;
+  background: rgba(20,20,20,0.95); padding: 8px 12px;
   display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
   z-index: 20; border-top: 1px solid #333;
 }
@@ -44,7 +25,7 @@ html, body { width: 100%; height: 100%; background: #1a1a1a; overflow: hidden; f
   text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px; }
 .layer-btn {
   padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;
-  cursor: pointer; border: 1px solid #444; background: #2a2a2a; color: #AAA;
+  cursor: pointer; border: 1px solid #444; background: #2a2a2a; color: #888;
   transition: all .15s;
 }
 .layer-btn.on  { background: #E8192C; border-color: #E8192C; color: white; }
@@ -52,59 +33,35 @@ html, body { width: 100%; height: 100%; background: #1a1a1a; overflow: hidden; f
 </style>
 </head>
 <body>
-
 <div id="msg"><div class="spin" id="spin"></div><div id="txt">Loading…</div></div>
-
-<!-- Label bar (shown when card is clicked from parent page) -->
-<div id="label-bar">
-  <span id="label-text">—</span>
-  <button id="label-close" onclick="clearLabel()">✕</button>
-</div>
-
-<!-- Layer toggles (populated dynamically after model loads) -->
-<div id="layers">
-  <span class="layer-label">Layers:</span>
-  <div id="layer-btns"></div>
-</div>
+<div id="layers"><span class="layer-label">Layers:</span><div id="layer-btns"></div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
 
 <script>
-var txt  = document.getElementById('txt');
-var spin = document.getElementById('spin');
-var msg  = document.getElementById('msg');
-
-// Map of layer name -> THREE.Object3D node
+var txt = document.getElementById('txt');
+var msg = document.getElementById('msg');
 var layerNodes = {};
-// Track which layers are on/off
 var layerState = {};
 
-function die(m) { spin.style.display='none'; txt.innerHTML=m; }
+function die(m) { document.getElementById('spin').style.display='none'; txt.innerHTML=m; }
 
 window.addEventListener('load', function() {
-  if (!THREE || !THREE.OrbitControls || !THREE.GLTFLoader)
-    return die('CDN failed to load');
-
+  if (!THREE || !THREE.OrbitControls || !THREE.GLTFLoader) return die('CDN failed');
   txt.textContent = 'Fetching model…';
   fetch('RIBEIRO.glb')
-    .then(function(r) {
-      if (!r.ok) return die('HTTP ' + r.status);
-      txt.textContent = 'Parsing…';
-      return r.arrayBuffer();
-    })
-    .then(function(buf) {
-      new THREE.GLTFLoader().parse(buf, '', build,
-        function(e){ die('Parse error: ' + (e.message||e)); });
-    })
-    .catch(function(e){ die('Fetch error: ' + e.message); });
+    .then(function(r){ if(!r.ok) return die('HTTP '+r.status); txt.textContent='Parsing…'; return r.arrayBuffer(); })
+    .then(function(buf){ new THREE.GLTFLoader().parse(buf,'',build,function(e){ die('Error: '+(e.message||e)); }); })
+    .catch(function(e){ die('Fetch error: '+e.message); });
 });
 
 function build(gltf) {
-  var scene    = new THREE.Scene();
+  var scene = new THREE.Scene();
   scene.background = new THREE.Color(0x1a1a1a);
-  var camera   = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 0.01, 100000);
+
+  var camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 0.01, 100000);
   var renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(innerWidth, innerHeight);
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -113,25 +70,28 @@ function build(gltf) {
   var controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.9));
-  var sun = new THREE.DirectionalLight(0xfffaf0, 1.0);
+  // Calibrated lights — not too bright so grey looks grey
+  scene.add(new THREE.AmbientLight(0xffffff, 0.45));
+  var sun = new THREE.DirectionalLight(0xfff8f0, 0.8);
   sun.position.set(50, 100, 50);
   scene.add(sun);
+  var fill = new THREE.DirectionalLight(0xc8d8ff, 0.3);
+  fill.position.set(-40, 30, -60);
+  scene.add(fill);
+
   scene.add(new THREE.GridHelper(500, 40, 0x333333, 0x222222));
   scene.add(gltf.scene);
 
-  // Collect named layer nodes from GLB
+  // Collect named layer nodes
   gltf.scene.children.forEach(function(child) {
     if (child.name) {
       layerNodes[child.name] = child;
       layerState[child.name] = true;
     }
   });
-
-  // Build layer toggle buttons
   buildLayerButtons();
 
-  // Fit camera
+  // Fit camera to model
   var box    = new THREE.Box3().setFromObject(gltf.scene);
   var center = box.getCenter(new THREE.Vector3());
   var size   = box.getSize(new THREE.Vector3());
@@ -141,17 +101,6 @@ function build(gltf) {
   controls.update();
 
   msg.style.display = 'none';
-
-  // Listen for label messages from parent page
-  window.addEventListener('message', function(ev) {
-    if (!ev.data || !ev.data.type) return;
-    if (ev.data.type === 'label') {
-      showLabel(ev.data.name || '—', ev.data.category || '');
-    }
-    if (ev.data.type === 'reset') {
-      clearLabel();
-    }
-  });
 
   window.addEventListener('resize', function(){
     camera.aspect = innerWidth/innerHeight;
@@ -163,51 +112,22 @@ function build(gltf) {
 }
 
 function buildLayerButtons() {
-  var container = document.getElementById('layer-btns');
-  container.innerHTML = '';
-
-  // Layer display names and emoji
-  var icons = {
-    'Roof':      '🏠 Roof',
-    'Walls':     '🧱 Walls',
-    'Floors':    '⬜ Floors',
-    'Doors':     '🚪 Doors',
-    'Windows':   '🪟 Windows',
-    'Structure': '🏗 Structure',
-    'Stairs':    '🪜 Stairs',
-    'Furniture': '🪑 Furniture',
-    'Other':     '⬡ Other',
-  };
-
+  var c = document.getElementById('layer-btns');
+  c.innerHTML = '';
+  var icons = { Roof:'🏠 Roof', Walls:'🧱 Walls', Floors:'⬜ Floors',
+    Doors:'🚪 Doors', Windows:'🪟 Windows', Structure:'🏗 Structure',
+    Stairs:'🪜 Stairs', Furniture:'🪑 Furniture', Other:'⬡ Other' };
   Object.keys(layerNodes).forEach(function(name) {
     var btn = document.createElement('button');
     btn.className = 'layer-btn on';
     btn.textContent = icons[name] || name;
-    btn.dataset.layer = name;
-    btn.onclick = function() { toggleLayer(name, btn); };
-    container.appendChild(btn);
+    btn.onclick = function(){
+      layerState[name] = !layerState[name];
+      layerNodes[name].visible = layerState[name];
+      btn.className = 'layer-btn ' + (layerState[name] ? 'on' : '');
+    };
+    c.appendChild(btn);
   });
-}
-
-function toggleLayer(name, btn) {
-  var node = layerNodes[name];
-  if (!node) return;
-  layerState[name] = !layerState[name];
-  node.visible = layerState[name];
-  btn.className = 'layer-btn ' + (layerState[name] ? 'on' : '');
-}
-
-function showLabel(name, category) {
-  var bar  = document.getElementById('label-bar');
-  var text = document.getElementById('label-text');
-  var cat  = category ? ' (' + category + ')' : '';
-  text.textContent = '📌 ' + name + cat;
-  bar.classList.add('visible');
-}
-
-function clearLabel() {
-  document.getElementById('label-bar').classList.remove('visible');
-  document.getElementById('label-text').textContent = '—';
 }
 </script>
 </body>
