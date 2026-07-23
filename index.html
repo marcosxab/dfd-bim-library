@@ -493,13 +493,13 @@ function openM(idx) {
   // Send element name to 3D viewer
   var iframe = document.querySelector('iframe');
   if (iframe && iframe.contentWindow) {
-    iframe.contentWindow.postMessage({ type: 'label', name: e.element_name || e.DfD_MaterialPassportID || '', category: e.DfD_OriginalCategory || '' }, '*');
+    iframe.contentWindow.postMessage({ type: 'label', name: e.DfD_MaterialPassportID || e.element_name || '', category: e.DfD_OriginalCategory || '' }, '*');
   }
 
   // Send highlight message to the 3D viewer iframe
   var iframe = document.querySelector('#panel-3d iframe');
   if (iframe && iframe.contentWindow) {
-    iframe.contentWindow.postMessage({ type: 'highlight', name: e.element_name || '' }, '*');
+
   }
 }
 
