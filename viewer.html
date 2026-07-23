@@ -21,7 +21,6 @@ html, body { width: 100%; height: 100%; background: #1a1a1a; overflow: hidden; }
 <body>
 <div id="msg"><div class="spin" id="spin"></div><div id="txt">Loading…</div></div>
 
-<!-- Three r134 — known good with UMD examples -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -30,11 +29,13 @@ html, body { width: 100%; height: 100%; background: #1a1a1a; overflow: hidden; }
 var txt  = document.getElementById('txt');
 var spin = document.getElementById('spin');
 var msg  = document.getElementById('msg');
+var allMeshes = [];
+var originalMaterials = new Map();
 
 function die(m) { spin.style.display='none'; txt.innerHTML=m; }
 
 window.addEventListener('load', function() {
-  if (!THREE)           return die('THREE not loaded');
+  if (!THREE)               return die('THREE not loaded');
   if (!THREE.OrbitControls) return die('OrbitControls not loaded');
   if (!THREE.GLTFLoader)    return die('GLTFLoader not loaded');
 
@@ -70,8 +71,15 @@ function build(gltf) {
   scene.add(sun);
   scene.add(new THREE.GridHelper(500,40,0x333333,0x222222));
 
-  gltf.scene.traverse(function(o){ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true; } });
   scene.add(gltf.scene);
+
+  // Store all meshes and their original materials for highlight/reset
+  gltf.scene.traverse(function(o) {
+    if (o.isMesh) {
+      allMeshes.push(o);
+      originalMaterials.set(o.uuid, o.material.clone());
+    }
+  });
 
   var box    = new THREE.Box3().setFromObject(gltf.scene);
   var center = box.getCenter(new THREE.Vector3());
@@ -82,6 +90,40 @@ function build(gltf) {
   controls.update();
 
   msg.style.display = 'none';
+
+  // Listen for highlight/reset messages from the parent page
+  window.addEventListener('message', function(ev) {
+    if (!ev.data || !ev.data.type) return;
+
+    if (ev.data.type === 'highlight') {
+      var name = ev.data.name;
+      allMeshes.forEach(function(m) {
+        // Match by node name or parent node name
+        var nodeMatch = (m.name === name) || (m.parent && m.parent.name === name);
+        if (nodeMatch) {
+          // Highlighted: full opacity + orange emissive glow
+          var mat = originalMaterials.get(m.uuid).clone();
+          mat.transparent = false;
+          mat.opacity = 1.0;
+          mat.emissive = new THREE.Color(0.3, 0.12, 0.0);
+          m.material = mat;
+        } else {
+          // Others: dark and transparent
+          var mat = originalMaterials.get(m.uuid).clone();
+          mat.transparent = true;
+          mat.opacity = 0.12;
+          mat.emissive = new THREE.Color(0, 0, 0);
+          m.material = mat;
+        }
+      });
+    }
+
+    if (ev.data.type === 'reset') {
+      allMeshes.forEach(function(m) {
+        m.material = originalMaterials.get(m.uuid).clone();
+      });
+    }
+  });
 
   window.addEventListener('resize', function(){
     camera.aspect = innerWidth/innerHeight;
