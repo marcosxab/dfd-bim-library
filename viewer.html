@@ -4,24 +4,69 @@
 <meta charset="UTF-8">
 <title>3D Viewer</title>
 <style>
-* { margin: 0; padding: 0; }
-html, body { width: 100%; height: 100%; background: #1a1a1a; overflow: hidden; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; background: #1a1a1a; overflow: hidden; font-family: Segoe UI, sans-serif; }
+
 #msg {
   position: fixed; inset: 0; display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 14px;
-  color: #888; font-family: Segoe UI, sans-serif; font-size: 13px;
-  background: #1a1a1a; z-index: 10;
+  color: #888; font-size: 13px; background: #1a1a1a; z-index: 10;
 }
 .spin { width:30px; height:30px; border:3px solid #333;
   border-top-color:#E8192C; border-radius:50%;
   animation:s .8s linear infinite; }
 @keyframes s { to { transform:rotate(360deg); } }
+
+/* Label bar — shown when a card is clicked */
+#label-bar {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(232,25,44,0.92); color: white;
+  padding: 7px 14px; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.3px; z-index: 20;
+  display: none; align-items: center; gap: 10px;
+}
+#label-bar.visible { display: flex; }
+#label-text { flex: 1; }
+#label-close {
+  cursor: pointer; font-size: 16px; opacity: 0.8; line-height: 1;
+  background: none; border: none; color: white;
+}
+#label-close:hover { opacity: 1; }
+
+/* Layer toggle buttons */
+#layers {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: rgba(20,20,20,0.92); padding: 8px 12px;
+  display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+  z-index: 20; border-top: 1px solid #333;
+}
+.layer-label { font-size: 10px; color: #555; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px; }
+.layer-btn {
+  padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;
+  cursor: pointer; border: 1px solid #444; background: #2a2a2a; color: #AAA;
+  transition: all .15s;
+}
+.layer-btn.on  { background: #E8192C; border-color: #E8192C; color: white; }
+.layer-btn:hover { border-color: #888; }
 </style>
 </head>
 <body>
+
 <div id="msg"><div class="spin" id="spin"></div><div id="txt">Loading…</div></div>
 
-<!-- Three r134 — known good with UMD examples -->
+<!-- Label bar (shown when card is clicked from parent page) -->
+<div id="label-bar">
+  <span id="label-text">—</span>
+  <button id="label-close" onclick="clearLabel()">✕</button>
+</div>
+
+<!-- Layer toggles (populated dynamically after model loads) -->
+<div id="layers">
+  <span class="layer-label">Layers:</span>
+  <div id="layer-btns"></div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -31,34 +76,38 @@ var txt  = document.getElementById('txt');
 var spin = document.getElementById('spin');
 var msg  = document.getElementById('msg');
 
+// Map of layer name -> THREE.Object3D node
+var layerNodes = {};
+// Track which layers are on/off
+var layerState = {};
+
 function die(m) { spin.style.display='none'; txt.innerHTML=m; }
 
 window.addEventListener('load', function() {
-  if (!THREE)           return die('THREE not loaded');
-  if (!THREE.OrbitControls) return die('OrbitControls not loaded');
-  if (!THREE.GLTFLoader)    return die('GLTFLoader not loaded');
+  if (!THREE || !THREE.OrbitControls || !THREE.GLTFLoader)
+    return die('CDN failed to load');
 
   txt.textContent = 'Fetching model…';
-
   fetch('RIBEIRO.glb')
     .then(function(r) {
-      if (!r.ok) return die('HTTP '+r.status+' — RIBEIRO.glb not found');
+      if (!r.ok) return die('HTTP ' + r.status);
       txt.textContent = 'Parsing…';
       return r.arrayBuffer();
     })
     .then(function(buf) {
-      new THREE.GLTFLoader().parse(buf, '', build, function(e){ die('Parse error: '+(e.message||e)); });
+      new THREE.GLTFLoader().parse(buf, '', build,
+        function(e){ die('Parse error: ' + (e.message||e)); });
     })
-    .catch(function(e){ die('Fetch error: '+e.message); });
+    .catch(function(e){ die('Fetch error: ' + e.message); });
 });
 
 function build(gltf) {
   var scene    = new THREE.Scene();
   scene.background = new THREE.Color(0x1a1a1a);
   var camera   = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 0.01, 100000);
-  var renderer = new THREE.WebGLRenderer({antialias:true});
+  var renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(innerWidth, innerHeight);
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   document.body.appendChild(renderer.domElement);
 
   var controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -66,13 +115,23 @@ function build(gltf) {
 
   scene.add(new THREE.AmbientLight(0xffffff, 0.9));
   var sun = new THREE.DirectionalLight(0xfffaf0, 1.0);
-  sun.position.set(50,100,50);
+  sun.position.set(50, 100, 50);
   scene.add(sun);
-  scene.add(new THREE.GridHelper(500,40,0x333333,0x222222));
-
-  gltf.scene.traverse(function(o){ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true; } });
+  scene.add(new THREE.GridHelper(500, 40, 0x333333, 0x222222));
   scene.add(gltf.scene);
 
+  // Collect named layer nodes from GLB
+  gltf.scene.children.forEach(function(child) {
+    if (child.name) {
+      layerNodes[child.name] = child;
+      layerState[child.name] = true;
+    }
+  });
+
+  // Build layer toggle buttons
+  buildLayerButtons();
+
+  // Fit camera
   var box    = new THREE.Box3().setFromObject(gltf.scene);
   var center = box.getCenter(new THREE.Vector3());
   var size   = box.getSize(new THREE.Vector3());
@@ -83,6 +142,17 @@ function build(gltf) {
 
   msg.style.display = 'none';
 
+  // Listen for label messages from parent page
+  window.addEventListener('message', function(ev) {
+    if (!ev.data || !ev.data.type) return;
+    if (ev.data.type === 'label') {
+      showLabel(ev.data.name || '—', ev.data.category || '');
+    }
+    if (ev.data.type === 'reset') {
+      clearLabel();
+    }
+  });
+
   window.addEventListener('resize', function(){
     camera.aspect = innerWidth/innerHeight;
     camera.updateProjectionMatrix();
@@ -90,6 +160,54 @@ function build(gltf) {
   });
 
   (function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera); })();
+}
+
+function buildLayerButtons() {
+  var container = document.getElementById('layer-btns');
+  container.innerHTML = '';
+
+  // Layer display names and emoji
+  var icons = {
+    'Roof':      '🏠 Roof',
+    'Walls':     '🧱 Walls',
+    'Floors':    '⬜ Floors',
+    'Doors':     '🚪 Doors',
+    'Windows':   '🪟 Windows',
+    'Structure': '🏗 Structure',
+    'Stairs':    '🪜 Stairs',
+    'Furniture': '🪑 Furniture',
+    'Other':     '⬡ Other',
+  };
+
+  Object.keys(layerNodes).forEach(function(name) {
+    var btn = document.createElement('button');
+    btn.className = 'layer-btn on';
+    btn.textContent = icons[name] || name;
+    btn.dataset.layer = name;
+    btn.onclick = function() { toggleLayer(name, btn); };
+    container.appendChild(btn);
+  });
+}
+
+function toggleLayer(name, btn) {
+  var node = layerNodes[name];
+  if (!node) return;
+  layerState[name] = !layerState[name];
+  node.visible = layerState[name];
+  btn.className = 'layer-btn ' + (layerState[name] ? 'on' : '');
+}
+
+function showLabel(name, category) {
+  var bar  = document.getElementById('label-bar');
+  var text = document.getElementById('label-text');
+  var cat  = category ? ' (' + category + ')' : '';
+  text.textContent = '📌 ' + name + cat;
+  bar.classList.add('visible');
+}
+
+function clearLabel() {
+  document.getElementById('label-bar').classList.remove('visible');
+  document.getElementById('label-text').textContent = '—';
 }
 </script>
 </body>
