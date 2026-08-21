@@ -388,7 +388,7 @@ function render() {
   document.getElementById('count-pill').textContent = vis.length+' element'+(vis.length!==1?'s':'')+' shown';
   const vL1=vis.filter(e=>e._level==='L1'), vL2=vis.filter(e=>e._level==='L2');
   let html='';
-  if (vL1.length) html+=lvlBlock('Level 1 — Disassembly Potential','red','Componentised elements · Score = (CT+CA+ID+GPE)/4',vL1);
+  if (vL1.length) html+=lvlBlock('Level 1 — Disassembly Potential','red','Componentised elements · Score = 4 / (1/CT+1/CA+1/ID+1/GPE)',vL1);
   if (vL2.length) html+=lvlBlock('Level 2 — TRACE Protocol','purple','Monolithic elements · Score = Physical Integrity+Recoverability+Reuse Feasibility+Information Confidence (0–8)',vL2);
   if (!vis.length) html='<div class="empty"><div class="empty-icon">🔍</div><div>No elements match your filters.</div></div>';
   document.getElementById('main').innerHTML=html;
