@@ -185,7 +185,7 @@ footer span { color: #888; }
       <p style="margin-top:2px;color:#555;font-size:11px">Digital Material Passport Platform · MSc Dissertation BIM A+ (Erasmus+) · Marcos Batista · University of Minho / University of Ljubljana</p>
     </div>
     <div class="header-badges">
-      <span class="badge badge-red">Level 1 — Durmisevic</span>
+      <span class="badge badge-red">Level 1 — Disassembly Potential</span>
       <span class="badge badge-purple">Level 2 — TRACE Protocol</span>
       <span class="badge badge-outline">IFC · BIM</span>
     </div>
@@ -200,7 +200,7 @@ footer span { color: #888; }
       <span class="stat-sep">|</span>
       <div class="stat"><span class="stat-num" id="s-eol" style="color:#9E9E9E">—</span><span class="stat-label">End of Life</span></div>
       <span class="stat-sep">|</span>
-      <div class="stat"><span class="stat-num" id="s-l1" style="color:var(--red)">—</span><span class="stat-label">L1 Durmisevic</span></div>
+      <div class="stat"><span class="stat-num" id="s-l1" style="color:var(--red)">—</span><span class="stat-label">L1 Disassembly Potential</span></div>
       <span class="stat-sep">|</span>
       <div class="stat"><span class="stat-num" id="s-l2" style="color:#9B72D0">—</span><span class="stat-label">L2 TRACE</span></div>
     </div>
@@ -220,7 +220,7 @@ footer span { color: #888; }
   <div class="filters-inner">
     <span class="filter-label">Level:</span>
     <button class="filter-btn act-dark" id="fb-all" onclick="setFilter('level','all')">All</button>
-    <button class="filter-btn" id="fb-l1"    onclick="setFilter('level','L1')">Durmisevic</button>
+    <button class="filter-btn" id="fb-l1"    onclick="setFilter('level','L1')">Disassembly Potential</button>
     <button class="filter-btn" id="fb-l2"    onclick="setFilter('level','L2')">TRACE</button>
     <span class="filter-sep">|</span>
     <span class="filter-label">Reuse:</span>
@@ -290,14 +290,14 @@ const GLB_FILE = "RIBEIRO.glb";
 // ══════════════════════════════════════════════════════════════
 const FALLBACK = {
   dfd_library: {
-    level_1_durmisevic: { elements: [
-      { element_name:"DfD_Door_Colonial_SJM_1820_Exterior_Double", ifc_guid:"3X_SJM_DOOR_001", ifc_class:"IfcDoor", DfD_MaterialPassportID:"MP-SJM-2026-0001", DfD_OriginalCategory:"IfcDoor", DfD_CurrentUse:"IfcDoor", DfD_LifeCycleState:"In Use", DfD_AssessmentMethod:"Durmisevic_DDF", DfD_CurrentProject:"Fazenda São José de Mipibu — Field Survey 2025", DfD_CurrentLocation:"Main House | Ground Floor | Main Entrance", DfD_InstallationDate:"c.1820", DfD_ReassemblyCount:"0", DfD_LifecycleHistory:"[c.1820] Initial installation — Fazenda SJM", DfD_ExpectedServiceLife:"200+ years (colonial door, c.1820, still in use 2025)", DfD_ConnectionType:"bolted", DfD_CT_Score:"0.8", DfD_CA_Score:"1.0", DfD_ID_Score:"1.0", DfD_GPE_Score:"1.0", DfD_DisassemblyScore:"0.95", DfD_DisassemblyClass:"A — Excellent", DfD_IsReusable:"Yes", DfD_IsRepairable:"Yes", geom_width_mm:"1800", geom_height_mm:"2800" },
-      { element_name:"DfD_Door_Colonial_SJM_1820_Exterior_Single", ifc_guid:"3X_SJM_DOOR_002", ifc_class:"IfcDoor", DfD_MaterialPassportID:"MP-SJM-2026-0002", DfD_OriginalCategory:"IfcDoor", DfD_CurrentUse:"IfcDoor", DfD_LifeCycleState:"In Use", DfD_AssessmentMethod:"Durmisevic_DDF", DfD_CurrentProject:"Fazenda São José de Mipibu — Field Survey 2025", DfD_CurrentLocation:"Main House | Ground Floor | Bedroom", DfD_InstallationDate:"c.1820", DfD_ReassemblyCount:"0", DfD_LifecycleHistory:"[c.1820] Initial installation — Fazenda SJM, Bedroom", DfD_ExpectedServiceLife:"200+ years", DfD_ConnectionType:"bolted", DfD_CT_Score:"0.8", DfD_CA_Score:"1.0", DfD_ID_Score:"1.0", DfD_GPE_Score:"1.0", DfD_DisassemblyScore:"0.95", DfD_DisassemblyClass:"A — Excellent", DfD_IsReusable:"Yes", DfD_IsRepairable:"Yes", geom_width_mm:"900", geom_height_mm:"2400" },
-      { element_name:"DfD_Window_Colonial_SJM_1820_Sash", ifc_guid:"3X_SJM_WIN_001", ifc_class:"IfcWindow", DfD_MaterialPassportID:"MP-SJM-2026-0014", DfD_OriginalCategory:"IfcWindow", DfD_CurrentUse:"IfcWindow", DfD_LifeCycleState:"In Use", DfD_AssessmentMethod:"Durmisevic_DDF", DfD_CurrentProject:"Fazenda São José de Mipibu — Field Survey 2025", DfD_CurrentLocation:"Main House | Ground Floor | North Façade", DfD_InstallationDate:"c.1820", DfD_ReassemblyCount:"0", DfD_LifecycleHistory:"[c.1820] Initial installation — North Façade", DfD_ExpectedServiceLife:"200+ years", DfD_ConnectionType:"screwed", DfD_CT_Score:"0.7", DfD_CA_Score:"0.8", DfD_ID_Score:"0.7", DfD_GPE_Score:"0.8", DfD_DisassemblyScore:"0.75", DfD_DisassemblyClass:"A — Excellent", DfD_IsReusable:"Yes", DfD_IsRepairable:"Yes", geom_width_mm:"1200", geom_height_mm:"1600" }
+    level_1_disassembly_potential: { elements: [
+      { element_name:"DfD_Door_Colonial_SJM_1820_Exterior_Double", ifc_guid:"3X_SJM_DOOR_001", ifc_class:"IfcDoor", DfD_MaterialPassportID:"MP-SJM-2026-0001", DfD_OriginalCategory:"IfcDoor", DfD_CurrentUse:"IfcDoor", DfD_LifeCycleState:"In Use", DfD_AssessmentMethod:"Disassembly_Potential", DfD_CurrentProject:"Fazenda São José de Mipibu — Field Survey 2025", DfD_CurrentLocation:"Main House | Ground Floor | Main Entrance", DfD_InstallationDate:"c.1820", DfD_ReassemblyCount:"0", DfD_LifecycleHistory:"[c.1820] Initial installation — Fazenda SJM", DfD_ExpectedServiceLife:"200+ years (colonial door, c.1820, still in use 2025)", DfD_ConnectionType:"bolted", DfD_CT_Score:"0.8", DfD_CA_Score:"1.0", DfD_ID_Score:"1.0", DfD_GPE_Score:"1.0", DfD_DisassemblyScore:"0.95", DfD_DisassemblyClass:"A — Excellent", DfD_IsReusable:"Yes", DfD_IsRepairable:"Yes", geom_width_mm:"1800", geom_height_mm:"2800" },
+      { element_name:"DfD_Door_Colonial_SJM_1820_Exterior_Single", ifc_guid:"3X_SJM_DOOR_002", ifc_class:"IfcDoor", DfD_MaterialPassportID:"MP-SJM-2026-0002", DfD_OriginalCategory:"IfcDoor", DfD_CurrentUse:"IfcDoor", DfD_LifeCycleState:"In Use", DfD_AssessmentMethod:"Disassembly_Potential", DfD_CurrentProject:"Fazenda São José de Mipibu — Field Survey 2025", DfD_CurrentLocation:"Main House | Ground Floor | Bedroom", DfD_InstallationDate:"c.1820", DfD_ReassemblyCount:"0", DfD_LifecycleHistory:"[c.1820] Initial installation — Fazenda SJM, Bedroom", DfD_ExpectedServiceLife:"200+ years", DfD_ConnectionType:"bolted", DfD_CT_Score:"0.8", DfD_CA_Score:"1.0", DfD_ID_Score:"1.0", DfD_GPE_Score:"1.0", DfD_DisassemblyScore:"0.95", DfD_DisassemblyClass:"A — Excellent", DfD_IsReusable:"Yes", DfD_IsRepairable:"Yes", geom_width_mm:"900", geom_height_mm:"2400" },
+      { element_name:"DfD_Window_Colonial_SJM_1820_Sash", ifc_guid:"3X_SJM_WIN_001", ifc_class:"IfcWindow", DfD_MaterialPassportID:"MP-SJM-2026-0014", DfD_OriginalCategory:"IfcWindow", DfD_CurrentUse:"IfcWindow", DfD_LifeCycleState:"In Use", DfD_AssessmentMethod:"Disassembly_Potential", DfD_CurrentProject:"Fazenda São José de Mipibu — Field Survey 2025", DfD_CurrentLocation:"Main House | Ground Floor | North Façade", DfD_InstallationDate:"c.1820", DfD_ReassemblyCount:"0", DfD_LifecycleHistory:"[c.1820] Initial installation — North Façade", DfD_ExpectedServiceLife:"200+ years", DfD_ConnectionType:"screwed", DfD_CT_Score:"0.7", DfD_CA_Score:"0.8", DfD_ID_Score:"0.7", DfD_GPE_Score:"0.8", DfD_DisassemblyScore:"0.75", DfD_DisassemblyClass:"A — Excellent", DfD_IsReusable:"Yes", DfD_IsRepairable:"Yes", geom_width_mm:"1200", geom_height_mm:"1600" }
     ]},
     level_2_trace: { elements: [
-      { element_name:"DfD_Wall_Adobe_SJM_1820_NorthFacade", ifc_guid:"3X_SJM_WALL_001", ifc_class:"IfcWall", DfD_MaterialPassportID:"MP-SJM-2026-0052", DfD_OriginalCategory:"IfcWall", DfD_CurrentUse:"IfcWall", DfD_LifeCycleState:"In Use", DfD_AssessmentMethod:"TRACE_Protocol", DfD_CurrentProject:"Fazenda São José de Mipibu — Field Survey 2025", DfD_CurrentLocation:"Main House | Ground Floor | North Façade", DfD_InstallationDate:"c.1820", DfD_ReassemblyCount:"0", DfD_LifecycleHistory:"[c.1820] Initial construction — adobe masonry, North Façade", DfD_ExpectedServiceLife:"200+ years (adobe wall, c.1820)", DfD_IsReusable:"Yes", DfD_IsRepairable:"Yes", DfD_TRACE_PhysicalIntegrity:"1", DfD_TRACE_Recoverability:"2", DfD_TRACE_ReuseFeasibility:"1", DfD_TRACE_InformationConfidence:"1", DfD_TRACE_Score:"5", DfD_TRACE_Recommendation:"Material Upcycling", geom_thickness_mm:"400" },
-      { element_name:"DfD_Wall_Adobe_SJM_1820_SouthFacade", ifc_guid:"3X_SJM_WALL_002", ifc_class:"IfcWall", DfD_MaterialPassportID:"MP-SJM-2026-0053", DfD_OriginalCategory:"IfcWall", DfD_CurrentUse:"IfcWall", DfD_LifeCycleState:"In Use", DfD_AssessmentMethod:"TRACE_Protocol", DfD_CurrentProject:"Fazenda São José de Mipibu — Field Survey 2025", DfD_CurrentLocation:"Main House | Ground Floor | South Façade", DfD_InstallationDate:"c.1820", DfD_ReassemblyCount:"0", DfD_LifecycleHistory:"[c.1820] Initial construction — adobe masonry, South Façade", DfD_ExpectedServiceLife:"200+ years", DfD_IsReusable:"Yes", DfD_IsRepairable:"Yes", DfD_TRACE_PhysicalIntegrity:"2", DfD_TRACE_Recoverability:"2", DfD_TRACE_ReuseFeasibility:"2", DfD_TRACE_InformationConfidence:"2", DfD_TRACE_Score:"8", DfD_TRACE_Recommendation:"Adapted Reuse", geom_thickness_mm:"400" }
+      { element_name:"DfD_Wall_Adobe_SJM_1820_NorthFacade", ifc_guid:"3X_SJM_WALL_001", ifc_class:"IfcWall", DfD_MaterialPassportID:"MP-SJM-2026-0052", DfD_OriginalCategory:"IfcWall", DfD_CurrentUse:"IfcWall", DfD_LifeCycleState:"In Use", DfD_AssessmentMethod:"TRACE_Protocol", DfD_CurrentProject:"Fazenda São José de Mipibu — Field Survey 2025", DfD_CurrentLocation:"Main House | Ground Floor | North Façade", DfD_InstallationDate:"c.1820", DfD_ReassemblyCount:"0", DfD_LifecycleHistory:"[c.1820] Initial construction — adobe masonry, North Façade", DfD_ExpectedServiceLife:"200+ years (adobe wall, c.1820)", DfD_IsReusable:"Yes", DfD_IsRepairable:"Yes", DfD_TRACE_PhysicalIntegrity:"1", DfD_TRACE_Recoverability:"2", DfD_TRACE_ReuseFeasibility:"1", DfD_TRACE_InformationConfidence:"1", DfD_TRACE_Score:"5", DfD_TRACE_Recommendation:"Conditional", geom_thickness_mm:"400" },
+      { element_name:"DfD_Wall_Adobe_SJM_1820_SouthFacade", ifc_guid:"3X_SJM_WALL_002", ifc_class:"IfcWall", DfD_MaterialPassportID:"MP-SJM-2026-0053", DfD_OriginalCategory:"IfcWall", DfD_CurrentUse:"IfcWall", DfD_LifeCycleState:"In Use", DfD_AssessmentMethod:"TRACE_Protocol", DfD_CurrentProject:"Fazenda São José de Mipibu — Field Survey 2025", DfD_CurrentLocation:"Main House | Ground Floor | South Façade", DfD_InstallationDate:"c.1820", DfD_ReassemblyCount:"0", DfD_LifecycleHistory:"[c.1820] Initial construction — adobe masonry, South Façade", DfD_ExpectedServiceLife:"200+ years", DfD_IsReusable:"Yes", DfD_IsRepairable:"Yes", DfD_TRACE_PhysicalIntegrity:"2", DfD_TRACE_Recoverability:"2", DfD_TRACE_ReuseFeasibility:"2", DfD_TRACE_InformationConfidence:"2", DfD_TRACE_Score:"8", DfD_TRACE_Recommendation:"Direct Reuse", geom_thickness_mm:"400" }
     ]}
   }
 };
@@ -360,7 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function load(d) {
-  const l1 = (d?.dfd_library?.level_1_durmisevic?.elements||[]).map(e=>({...e,_level:'L1'}));
+  const l1 = (d?.dfd_library?.level_1_disassembly_potential?.elements||[]).map(e=>({...e,_level:'L1'}));
   const l2 = (d?.dfd_library?.level_2_trace?.elements||[]).map(e=>({...e,_level:'L2'}));
   DATA = [...l1,...l2];
   render();
@@ -388,7 +388,7 @@ function render() {
   document.getElementById('count-pill').textContent = vis.length+' element'+(vis.length!==1?'s':'')+' shown';
   const vL1=vis.filter(e=>e._level==='L1'), vL2=vis.filter(e=>e._level==='L2');
   let html='';
-  if (vL1.length) html+=lvlBlock('Level 1 — Durmisevic DDF','red','Componentised elements · Score = (CT+CA+ID+GPE)/4',vL1);
+  if (vL1.length) html+=lvlBlock('Level 1 — Disassembly Potential','red','Componentised elements · Score = (CT+CA+ID+GPE)/4',vL1);
   if (vL2.length) html+=lvlBlock('Level 2 — TRACE Protocol','purple','Monolithic elements · Score = Physical Integrity+Recoverability+Reuse Feasibility+Information Confidence (0–8)',vL2);
   if (!vis.length) html='<div class="empty"><div class="empty-icon">🔍</div><div>No elements match your filters.</div></div>';
   document.getElementById('main').innerHTML=html;
@@ -445,7 +445,7 @@ function openM(idx) {
   document.getElementById('mpid').textContent=e.DfD_MaterialPassportID||'—';
   document.getElementById('mtitle').textContent=e.element_name||'—';
   document.getElementById('mbadges').innerHTML=
-    `<span class="modal-badge ${isL1?'red':'purple'}">${isL1?'Level 1 — Durmisevic':'Level 2 — TRACE'}</span>
+    `<span class="modal-badge ${isL1?'red':'purple'}">${isL1?'Level 1 — Disassembly Potential':'Level 2 — TRACE'}</span>
      <span class="modal-badge ${rs}">${reuseLabel(rs)}</span>
      ${e.DfD_LifeCycleState?`<span class="modal-badge grey">${e.DfD_LifeCycleState}</span>`:''}`;
 
@@ -456,7 +456,7 @@ function openM(idx) {
   if (isL1) {
     const s=parseFloat(e.DfD_DisassemblyScore||0);
     const bg={green:'var(--green-light)',amber:'var(--amber-light)',grey:'var(--grey-light)'}[rs];
-    f+=`<div class="field-group"><div class="field-group-title" style="color:var(--red-dark)">Disassembly Assessment — Durmisevic (2006)</div>
+    f+=`<div class="field-group"><div class="field-group-title" style="color:var(--red-dark)">Disassembly Assessment — Disassembly Potential</div>
       <div class="field-grid">
         ${fv('Connection Type',e.DfD_ConnectionType)}${fv('CT Score',e.DfD_CT_Score)}${fv('CA Score',e.DfD_CA_Score)}${fv('ID Score',e.DfD_ID_Score)}${fv('GPE Score',e.DfD_GPE_Score)}
         <div class="field full"><div class="fkey">Score & Class</div>
