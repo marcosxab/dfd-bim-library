@@ -1,17 +1,18 @@
 {
   "dfd_library": {
     "schema_version": "3.0",
-    "generated": "2026-08-21T01:14",
+    "generated": "2026-08-21T22:03",
     "author": "Marcos Batista",
     "programme": "European Master in BIM A+ (Erasmus+)",
     "methodology": "Two-level DfD framework — Level 1: Disassembly Potential (4 DDFs) | Level 2: TRACE Protocol (Tangible Reuse Assessment for Construction Elements) for monolithic / non-componentised elements",
-    "total_elements": 53,
+    "total_elements": 73,
     "level_1_disassembly_potential": {
-      "count": 24,
+      "count": 44,
       "by_type": {
         "IfcDoor": 13,
         "IfcWindow": 9,
-        "IfcSlab": 2
+        "IfcSlab": 2,
+        "IfcRoof": 20
       },
       "elements": [
         {
@@ -38,7 +39,7 @@
           "DfD_CA_Score": 0.6000000000000001,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 0.7000000000000001,
-          "DfD_DisassemblyScore": 0.75,
+          "DfD_DisassemblyScore": 0.724,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1130,
           "geom_height_mm": 2500,
@@ -59,7 +60,7 @@
           "DfD_CurrentLocation": "Main House | Ground Floor | Main Entrance to Bedroom",
           "DfD_LifecycleHistory": "[c.1820] Initial installation — Fazenda SJM, Main Entrance to Bedroom, Ground Floor",
           "DfD_ExpectedServiceLife": "200+ years (colonial door, c.1820, still in use 2025)",
-          "DfD_AssessmentMethod": "Durmisevic_DDF",
+          "DfD_AssessmentMethod": "DisassemblyPotential",
           "DfD_UseTraceProtocol": false,
           "DfD_IsReusable": true,
           "DfD_IsRepairable": true,
@@ -68,7 +69,7 @@
           "DfD_CA_Score": 1.0,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 1.0,
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1450,
           "geom_height_mm": 2500,
@@ -98,7 +99,7 @@
           "DfD_CA_Score": 1.0,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 1.0,
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1310,
           "geom_height_mm": 2500,
@@ -128,7 +129,7 @@
           "DfD_CA_Score": 1.0,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 1.0,
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1450,
           "geom_height_mm": 2500,
@@ -158,7 +159,7 @@
           "DfD_CA_Score": 0.6000000000000001,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 0.7000000000000001,
-          "DfD_DisassemblyScore": 0.75,
+          "DfD_DisassemblyScore": 0.724,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1130,
           "geom_height_mm": 2500,
@@ -188,7 +189,7 @@
           "DfD_CA_Score": 0.6000000000000001,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 0.7000000000000001,
-          "DfD_DisassemblyScore": 0.75,
+          "DfD_DisassemblyScore": 0.724,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1130,
           "geom_height_mm": 2500,
@@ -218,7 +219,7 @@
           "DfD_CA_Score": 0.6000000000000001,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 0.7000000000000001,
-          "DfD_DisassemblyScore": 0.75,
+          "DfD_DisassemblyScore": 0.724,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1130,
           "geom_height_mm": 2500,
@@ -248,7 +249,7 @@
           "DfD_CA_Score": 0.6000000000000001,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 0.7000000000000001,
-          "DfD_DisassemblyScore": 0.75,
+          "DfD_DisassemblyScore": 0.724,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1130,
           "geom_height_mm": 2500,
@@ -278,7 +279,7 @@
           "DfD_CA_Score": 0.6000000000000001,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 0.7000000000000001,
-          "DfD_DisassemblyScore": 0.75,
+          "DfD_DisassemblyScore": 0.724,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1130,
           "geom_height_mm": 2500,
@@ -308,7 +309,7 @@
           "DfD_CA_Score": 0.6000000000000001,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 0.7000000000000001,
-          "DfD_DisassemblyScore": 0.75,
+          "DfD_DisassemblyScore": 0.724,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1130,
           "geom_height_mm": 2500,
@@ -338,7 +339,7 @@
           "DfD_CA_Score": 0.6000000000000001,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 0.7000000000000001,
-          "DfD_DisassemblyScore": 0.75,
+          "DfD_DisassemblyScore": 0.724,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1130,
           "geom_height_mm": 2500,
@@ -368,7 +369,7 @@
           "DfD_CA_Score": 0.6000000000000001,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 0.7000000000000001,
-          "DfD_DisassemblyScore": 0.75,
+          "DfD_DisassemblyScore": 0.724,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1130,
           "geom_height_mm": 2500,
@@ -398,7 +399,7 @@
           "DfD_CA_Score": 0.6000000000000001,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 0.7000000000000001,
-          "DfD_DisassemblyScore": 0.75,
+          "DfD_DisassemblyScore": 0.724,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1130,
           "geom_height_mm": 2500,
@@ -428,7 +429,7 @@
           "DfD_CA_Score": 1.0,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 1.0,
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1220,
           "geom_height_mm": 1610,
@@ -458,7 +459,7 @@
           "DfD_CA_Score": 1.0,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 1.0,
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1220,
           "geom_height_mm": 1610,
@@ -488,7 +489,7 @@
           "DfD_CA_Score": 1.0,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 1.0,
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1330,
           "geom_height_mm": 1610,
@@ -518,7 +519,7 @@
           "DfD_CA_Score": 1.0,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 1.0,
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1330,
           "geom_height_mm": 1610,
@@ -548,7 +549,7 @@
           "DfD_CA_Score": 1.0,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 1.0,
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1220,
           "geom_height_mm": 1610,
@@ -578,7 +579,7 @@
           "DfD_CA_Score": 1.0,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 1.0,
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1220,
           "geom_height_mm": 1610,
@@ -608,7 +609,7 @@
           "DfD_CA_Score": 1.0,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 1.0,
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1220,
           "geom_height_mm": 1610,
@@ -638,7 +639,7 @@
           "DfD_CA_Score": 1.0,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 1.0,
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 1110,
           "geom_height_mm": 1610,
@@ -668,37 +669,257 @@
           "DfD_CA_Score": 1.0,
           "DfD_ID_Score": 1.0,
           "DfD_GPE_Score": 1.0,
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A",
           "geom_width_mm": 850,
           "geom_height_mm": 1610,
           "geom_source": "Qto_WindowBaseQuantities"
         },
         {
-          "element_name": "Floor:Genérico 2m:331579",
+          "element_name": "Floor:DfD_Floor_Colonial_SJM_1820_Ground_Rammed:331579",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSL84",
           "ifc_class": "IfcSlab",
           "assessment_level": "Level 1 — Disassembly Potential",
           "DfD_MaterialPassportID": "MP-SJM-2026-0031",
           "DfD_AssessmentMethod": "Disassembly_Potential",
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A — Excellent",
           "geom_width_mm": 12,
           "geom_thickness_mm": 20,
           "geom_source": "Qto_SlabBaseQuantities"
         },
         {
-          "element_name": "Floor:Genérico 1m:331678",
+          "element_name": "Floor:DfD_Floor_Colonial_SJM_1820_Ground_Rammmed:331678",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSLAX",
           "ifc_class": "IfcSlab",
           "assessment_level": "Level 1 — Disassembly Potential",
           "DfD_MaterialPassportID": "MP-SJM-2026-0032",
           "DfD_AssessmentMethod": "Disassembly_Potential",
-          "DfD_DisassemblyScore": 0.95,
+          "DfD_DisassemblyScore": 0.941,
           "DfD_DisassemblyClass": "A — Excellent",
           "geom_width_mm": 12,
           "geom_thickness_mm": 20,
           "geom_source": "Qto_SlabBaseQuantities"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Purlin_Colonial_SJM_1820_Structural_Longitudinal:329370",
+          "ifc_guid": "3U6VymcZX0CBO4BT4jSLkb",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0063",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Purlin_Colonial_SJM_1820_Structural_Longitudinal:329535",
+          "ifc_guid": "3U6VymcZX0CBO4BT4jSLe0",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0080",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Purlin_Colonial_SJM_1820_Structural_Longitudinal:330208",
+          "ifc_guid": "3U6VymcZX0CBO4BT4jSLJV",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0079",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Purlin_Colonial_SJM_1820_Structural_Longitudinal:330756",
+          "ifc_guid": "3U6VymcZX0CBO4BT4jSL4x",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0078",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Purlin_Colonial_SJM_1820_Structural_Longitudinal:331777",
+          "ifc_guid": "3U6VymcZX0CBO4BT4jSKq_",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0077",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Rafter_Colonial_SJM_1820_Structural_Sloped:638183",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwLKN",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0076",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Rafter_Colonial_SJM_1820_Structural_Sloped:638189",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwLKT",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0075",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Batten_Colonial_SJM_1820_Structural_Spaced:638216",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwLJu",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0074",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Batten_Colonial_SJM_1820_Structural_Spaced:638222",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwLJ_",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0073",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Basic Roof:DfD_Tile_Colonial_SJM_1820_Covering_CapaCanal:638243",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwLJJ",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0072",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Basic Roof:DfD_Tile_Colonial_SJM_1820_Covering_CapaCanal:638249",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwLJP",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0071",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Batten_Colonial_SJM_1820_Structural_Spaced:640354",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwIoI",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0070",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Batten_Colonial_SJM_1820_Structural_Spaced:640361",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwIoP",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0069",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Rafter_Colonial_SJM_1820_Structural_Sloped:640381",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwIoD",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0068",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Rafter_Colonial_SJM_1820_Structural_Sloped:640388",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwInq",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0067",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Basic Roof:DfD_Tile_Colonial_SJM_1820_Covering_CapaCanal:640409",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwInf",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0066",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Basic Roof:DfD_Tile_Colonial_SJM_1820_Covering_CapaCanal:640416",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwInG",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0065",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Rafter_Colonial_SJM_1820_Structural_Sloped:642935",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwIQ7",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0064",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Sloped Glazing:DfD_Batten_Colonial_SJM_1820_Structural_Spaced:642954",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwIPw",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0081",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
+        },
+        {
+          "element_name": "Basic Roof:DfD_Tile_Colonial_SJM_1820_Covering_CapaCanal:642973",
+          "ifc_guid": "1U8bWcSFbBegjJ0vbDwIPj",
+          "ifc_class": "IfcRoof",
+          "assessment_level": "Level 1 — Disassembly Potential",
+          "DfD_MaterialPassportID": "MP-SJM-2026-0082",
+          "DfD_AssessmentMethod": "Disassembly_Potential",
+          "DfD_DisassemblyScore": 0.941,
+          "DfD_DisassemblyClass": "A — Excellent",
+          "geom_source": "not found"
         }
       ]
     },
@@ -710,7 +931,7 @@
       },
       "elements": [
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:325443",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:325443",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSAfy",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -740,7 +961,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:325549",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:325549",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSAgI",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -770,7 +991,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:325579",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:325579",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSAhq",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -795,12 +1016,12 @@
           "DfD_TRACE_Score": 3,
           "DfD_TRACE_Recommendation": "End of Life",
           "geom_width_mm": 16,
-          "geom_height_mm": 4615,
+          "geom_height_mm": 4000,
           "geom_thickness_mm": 300,
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:325613",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:325613",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSAhI",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -830,7 +1051,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:325679",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:325679",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSAKG",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -854,12 +1075,13 @@
           "DfD_TRACE_InformationConfidence": 1,
           "DfD_TRACE_Score": 4,
           "DfD_TRACE_Recommendation": "Material Upcycling",
-          "geom_width_mm": 4600,
+          "geom_width_mm": 4300,
+          "geom_height_mm": 2967,
           "geom_thickness_mm": 300,
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:325733",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:325733",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSALQ",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -883,13 +1105,13 @@
           "DfD_TRACE_InformationConfidence": 2,
           "DfD_TRACE_Score": 4,
           "DfD_TRACE_Recommendation": "Material Upcycling",
-          "geom_width_mm": 1500,
+          "geom_width_mm": 1800,
           "geom_height_mm": 3495,
           "geom_thickness_mm": 300,
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:325928",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:325928",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSAGN",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -914,12 +1136,12 @@
           "DfD_TRACE_Score": 3,
           "DfD_TRACE_Recommendation": "End of Life",
           "geom_width_mm": 6900,
-          "geom_height_mm": 2893,
+          "geom_height_mm": 2658,
           "geom_thickness_mm": 300,
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:325976",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:325976",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSAHd",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -943,13 +1165,13 @@
           "DfD_TRACE_InformationConfidence": 0,
           "DfD_TRACE_Score": 1,
           "DfD_TRACE_Recommendation": "End of Life",
-          "geom_width_mm": 4150,
-          "geom_height_mm": 4110,
+          "geom_width_mm": 4450,
+          "geom_height_mm": 4000,
           "geom_thickness_mm": 300,
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:326127",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:326127",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSAJG",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -979,7 +1201,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:326562",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:326562",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSAQT",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1009,7 +1231,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:326621",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:326621",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSARY",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1039,7 +1261,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:326847",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:326847",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSA60",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1069,7 +1291,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:326857",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:326857",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSA7s",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1099,7 +1321,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:327240",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:327240",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSADt",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1129,7 +1351,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:327299",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:327299",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSAEy",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1159,7 +1381,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:327680",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:327680",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSLq$",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1184,12 +1406,12 @@
           "DfD_TRACE_Score": 8,
           "DfD_TRACE_Recommendation": "Adapted Reuse",
           "geom_width_mm": 4260,
-          "geom_height_mm": 4450,
+          "geom_height_mm": 4570,
           "geom_thickness_mm": 300,
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:329145",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:329145",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSLY6",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1218,7 +1440,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:329152",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:329152",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSLZ$",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1247,7 +1469,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:329906",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:329906",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSLMD",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1277,7 +1499,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:330039",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:330039",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSLG8",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1307,7 +1529,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "Basic Wall:Genérico - 300 mm:332561",
+          "element_name": "Basic Wall:DfD_Wall_Colonial_SJM_1820_Structural_Solid:332561",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSKuk",
           "ifc_class": "IfcWall",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1337,7 +1559,7 @@
           "geom_source": "Qto_WallBaseQuantities"
         },
         {
-          "element_name": "M_Coluna retangular:300 x 300mm:328116",
+          "element_name": "M_Coluna retangular:DfD_Column_Colonial_SJM_1820_Structural_Single:328116",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSLoB",
           "ifc_class": "IfcColumn",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1361,11 +1583,11 @@
           "DfD_TRACE_InformationConfidence": 2,
           "DfD_TRACE_Score": 6,
           "DfD_TRACE_Recommendation": "Material Upcycling",
-          "geom_height_mm": 3450,
+          "geom_height_mm": 3303,
           "geom_source": "Qto_ColumnBaseQuantities"
         },
         {
-          "element_name": "M_Coluna retangular:300 x 300mm:328324",
+          "element_name": "M_Coluna retangular:DfD_Column_Colonial_SJM_1820_Structural_Single:328324",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSL_x",
           "ifc_class": "IfcColumn",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1389,11 +1611,11 @@
           "DfD_TRACE_InformationConfidence": 0,
           "DfD_TRACE_Score": 4,
           "DfD_TRACE_Recommendation": "Material Upcycling",
-          "geom_height_mm": 2650,
+          "geom_height_mm": 2503,
           "geom_source": "Qto_ColumnBaseQuantities"
         },
         {
-          "element_name": "M_Coluna retangular:300 x 300mm:328372",
+          "element_name": "M_Coluna retangular:DfD_Column_Colonial_SJM_1820_Structural_Single:328372",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSL_B",
           "ifc_class": "IfcColumn",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1417,11 +1639,11 @@
           "DfD_TRACE_InformationConfidence": 0,
           "DfD_TRACE_Score": 4,
           "DfD_TRACE_Recommendation": "Material Upcycling",
-          "geom_height_mm": 2650,
+          "geom_height_mm": 2503,
           "geom_source": "Qto_ColumnBaseQuantities"
         },
         {
-          "element_name": "M_Coluna retangular:300 x 300mm:328402",
+          "element_name": "M_Coluna retangular:DfD_Column_Colonial_SJM_1820_Structural_Single:328402",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSL$j",
           "ifc_class": "IfcColumn",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1445,11 +1667,11 @@
           "DfD_TRACE_InformationConfidence": 0,
           "DfD_TRACE_Score": 3,
           "DfD_TRACE_Recommendation": "End of Life",
-          "geom_height_mm": 3450,
+          "geom_height_mm": 3303,
           "geom_source": "Qto_ColumnBaseQuantities"
         },
         {
-          "element_name": "M_Coluna retangular:300 x 300mm:328439",
+          "element_name": "M_Coluna retangular:DfD_Column_Colonial_SJM_1820_Structural_Single:328439",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSL$8",
           "ifc_class": "IfcColumn",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1473,11 +1695,11 @@
           "DfD_TRACE_InformationConfidence": 0,
           "DfD_TRACE_Score": 6,
           "DfD_TRACE_Recommendation": "Material Upcycling",
-          "geom_height_mm": 1650,
+          "geom_height_mm": 1503,
           "geom_source": "Qto_ColumnBaseQuantities"
         },
         {
-          "element_name": "M_Coluna retangular:300 x 300mm:328463",
+          "element_name": "M_Coluna retangular:DfD_Column_Colonial_SJM_1820_Structural_Single:328463",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSLum",
           "ifc_class": "IfcColumn",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1501,11 +1723,11 @@
           "DfD_TRACE_InformationConfidence": 2,
           "DfD_TRACE_Score": 5,
           "DfD_TRACE_Recommendation": "Material Upcycling",
-          "geom_height_mm": 1650,
+          "geom_height_mm": 1503,
           "geom_source": "Qto_ColumnBaseQuantities"
         },
         {
-          "element_name": "M_Coluna retangular:300 x 300mm:328475",
+          "element_name": "M_Coluna retangular:DfD_Column_Colonial_SJM_1820_Structural_Single:328475",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSLua",
           "ifc_class": "IfcColumn",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1529,11 +1751,11 @@
           "DfD_TRACE_InformationConfidence": 1,
           "DfD_TRACE_Score": 3,
           "DfD_TRACE_Recommendation": "End of Life",
-          "geom_height_mm": 1650,
+          "geom_height_mm": 1503,
           "geom_source": "Qto_ColumnBaseQuantities"
         },
         {
-          "element_name": "M_Coluna retangular:300 x 300mm:328485",
+          "element_name": "M_Coluna retangular:DfD_Column_Colonial_SJM_1820_Structural_Single:328485",
           "ifc_guid": "3U6VymcZX0CBO4BT4jSLuQ",
           "ifc_class": "IfcColumn",
           "assessment_level": "Level 2 — TRACE Protocol",
@@ -1557,7 +1779,7 @@
           "DfD_TRACE_InformationConfidence": 1,
           "DfD_TRACE_Score": 4,
           "DfD_TRACE_Recommendation": "Material Upcycling",
-          "geom_height_mm": 2450,
+          "geom_height_mm": 2303,
           "geom_source": "Qto_ColumnBaseQuantities"
         }
       ]
