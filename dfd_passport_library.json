@@ -1,7 +1,7 @@
-﻿{
+{
   "dfd_library": {
     "schema_version": "3.0",
-    "generated": "2026-08-28T03:41",
+    "generated": "2026-08-29T13:40",
     "author": "Marcos Batista",
     "programme": "European Master in BIM A+ (Erasmus+)",
     "methodology": "Two-level DfD framework — Level 1: Disassembly Potential (4 Design Determining Factors) | Level 2: TRACE Protocol (Tangible Reuse Assessment for Construction Elements)",
@@ -761,7 +761,7 @@
           "DfD_DisassemblyClass": "B — Good"
         },
         {
-          "element_name": "DfD_Batten_Colonial_SJM_1820_Structural_Spaced",
+          "element_name": "DfD_Batten_Colonial_SJM_2010_Structural_Spaced",
           "ifc_guid": "5e225826-70f9-4ba2-ab53-03994de0e9f0-0009bd08",
           "ifc_class": "Roofs",
           "DfD_MaterialPassportID": "MP-SJM-2026-0089",
@@ -787,7 +787,7 @@
           "DfD_DisassemblyClass": "B — Good"
         },
         {
-          "element_name": "DfD_Batten_Colonial_SJM_1820_Structural_Spaced",
+          "element_name": "DfD_Batten_Colonial_SJM_2010_Structural_Spaced",
           "ifc_guid": "5e225826-70f9-4ba2-ab53-03994de0e9f0-0009bd0e",
           "ifc_class": "Roofs",
           "DfD_MaterialPassportID": "MP-SJM-2026-0090",
@@ -862,7 +862,7 @@
           "DfD_DisassemblyClass": "A — Excellent"
         },
         {
-          "element_name": "DfD_Batten_Colonial_SJM_1820_Structural_Spaced",
+          "element_name": "DfD_Batten_Colonial_SJM_2010_Structural_Spaced",
           "ifc_guid": "5e225826-70f9-4ba2-ab53-03994de0e9f0-0009c562",
           "ifc_class": "Roofs",
           "DfD_MaterialPassportID": "MP-SJM-2026-0070",
@@ -887,7 +887,7 @@
           "DfD_DisassemblyClass": "A — Excellent"
         },
         {
-          "element_name": "DfD_Batten_Colonial_SJM_1820_Structural_Spaced",
+          "element_name": "DfD_Batten_Colonial_SJM_2010_Structural_Spaced",
           "ifc_guid": "5e225826-70f9-4ba2-ab53-03994de0e9f0-0009c569",
           "ifc_class": "Roofs",
           "DfD_MaterialPassportID": "MP-SJM-2026-0069",
@@ -1037,7 +1037,7 @@
           "DfD_DisassemblyClass": "A — Excellent"
         },
         {
-          "element_name": "DfD_Batten_Colonial_SJM_1820_Structural_Spaced",
+          "element_name": "DfD_Batten_Colonial_SJM_2010_Structural_Spaced",
           "ifc_guid": "5e225826-70f9-4ba2-ab53-03994de0e9f0-0009cf8a",
           "ifc_class": "Roofs",
           "DfD_MaterialPassportID": "MP-SJM-2026-0081",
@@ -1167,7 +1167,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Wall_Colonial_SJM_1820_Structural_Solid",
+          "element_name": "DfD_Wall_FireClayBrick_SJM_2010_Structural_Solid",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-0004f7ed",
           "ifc_class": "Walls",
           "DfD_MaterialPassportID": "MP-SJM-2026-0046",
@@ -1192,7 +1192,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Wall_Colonial_SJM_1820_Structural_Solid",
+          "element_name": "DfD_Wall_FireClayBrick_SJM_2010_Structural_Solid",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-0004f82f",
           "ifc_class": "Walls",
           "DfD_MaterialPassportID": "MP-SJM-2026-0047",
@@ -1217,7 +1217,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Wall_Colonial_SJM_1820_Structural_Solid",
+          "element_name": "DfD_Wall_FireClayBrick_SJM_2010_Structural_Solid",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-0004f865",
           "ifc_class": "Walls",
           "DfD_MaterialPassportID": "MP-SJM-2026-0048",
@@ -1492,7 +1492,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Column_Colonial_SJM_1820_Structural_Single",
+          "element_name": "DfD_Column_Colonial_SJM_2010_Structural_Single",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-000501b4",
           "ifc_class": "Columns",
           "DfD_MaterialPassportID": "MP-SJM-2026-0029",
@@ -1517,7 +1517,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Column_Colonial_SJM_1820_Structural_Single",
+          "element_name": "DfD_Column_Colonial_SJM_2010_Structural_Single",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-00050284",
           "ifc_class": "Columns",
           "DfD_MaterialPassportID": "MP-SJM-2026-0030",
@@ -1542,7 +1542,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Column_Colonial_SJM_1820_Structural_Single",
+          "element_name": "DfD_Column_Colonial_SJM_2010_Structural_Single",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-000502b4",
           "ifc_class": "Columns",
           "DfD_MaterialPassportID": "MP-SJM-2026-0024",
@@ -1567,7 +1567,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Column_Colonial_SJM_1820_Structural_Single",
+          "element_name": "DfD_Column_Colonial_SJM_2010_Structural_Single",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-000502d2",
           "ifc_class": "Columns",
           "DfD_MaterialPassportID": "MP-SJM-2026-0023",
@@ -1592,7 +1592,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Column_Colonial_SJM_1820_Structural_Single",
+          "element_name": "DfD_Column_Colonial_SJM_2010_Structural_Single",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-000502f7",
           "ifc_class": "Columns",
           "DfD_MaterialPassportID": "MP-SJM-2026-0025",
@@ -1617,7 +1617,7 @@
           "DfD_TRACE_Recommendation": "Material Upcycling"
         },
         {
-          "element_name": "DfD_Column_Colonial_SJM_1820_Structural_Single",
+          "element_name": "DfD_Column_Colonial_SJM_2010_Structural_Single",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-0005030f",
           "ifc_class": "Columns",
           "DfD_MaterialPassportID": "MP-SJM-2026-0026",
@@ -1642,7 +1642,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Column_Colonial_SJM_1820_Structural_Single",
+          "element_name": "DfD_Column_Colonial_SJM_2010_Structural_Single",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-0005031b",
           "ifc_class": "Columns",
           "DfD_MaterialPassportID": "MP-SJM-2026-0027",
@@ -1667,7 +1667,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Column_Colonial_SJM_1820_Structural_Single",
+          "element_name": "DfD_Column_Colonial_SJM_2010_Structural_Single",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-00050325",
           "ifc_class": "Columns",
           "DfD_MaterialPassportID": "MP-SJM-2026-0028",
@@ -1742,7 +1742,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Wall_Colonial_SJM_1820_Structural_Solid",
+          "element_name": "DfD_Wall_FireClayBrick_SJM_2010_Structural_Solid",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-000508b2",
           "ifc_class": "Walls",
           "DfD_MaterialPassportID": "MP-SJM-2026-0061",
@@ -1767,7 +1767,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Wall_Colonial_SJM_1820_Structural_Solid",
+          "element_name": "DfD_Wall_FireClayBrick_SJM_2010_Structural_Solid",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-00050937",
           "ifc_class": "Walls",
           "DfD_MaterialPassportID": "MP-SJM-2026-0052",
@@ -1792,7 +1792,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Floor_Colonial_SJM_1820_Ground_Rammed",
+          "element_name": "DfD_Floor_Colonial_SJM_XXXX_Ground_Rammed",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-00050f3b",
           "ifc_class": "Floors",
           "DfD_MaterialPassportID": "MP-SJM-2026-0031",
@@ -1817,7 +1817,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "DfD_Floor_Colonial_SJM_1820_Ground_Rammmed",
+          "element_name": "DfD_Floor_Colonial_SJM_XXXX_Ground_Rammmed",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-00050f9e",
           "ifc_class": "Floors",
           "DfD_MaterialPassportID": "MP-SJM-2026-0032",
@@ -1842,7 +1842,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "Escadas 1",
+          "element_name": "DfD_Stair_SJM_xxxx_Ground_Rammed",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-00051277",
           "ifc_class": "Stairs",
           "DfD_MaterialPassportID": "MP-SJM-2026-0095",
@@ -1867,7 +1867,7 @@
           "DfD_TRACE_Recommendation": "End of Life"
         },
         {
-          "element_name": "DfD_Wall_Colonial_SJM_1820_Structural_Solid",
+          "element_name": "DfD_Wall_FireClayBrick_SJM_2010_Structural_Solid",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-00051311",
           "ifc_class": "Walls",
           "DfD_MaterialPassportID": "MP-SJM-2026-0044",
@@ -1892,7 +1892,7 @@
           "DfD_TRACE_Recommendation": "Conditional"
         },
         {
-          "element_name": "Escadas 2",
+          "element_name": "DfD_Stair_SJM_xxxx_Ground_Rammed",
           "ifc_guid": "de19ff30-9a38-4030-b604-2dd12d745d3f-000514cb",
           "ifc_class": "Stairs",
           "DfD_MaterialPassportID": "MP-SJM-2026-0040",
@@ -1917,7 +1917,7 @@
           "DfD_TRACE_Recommendation": "End of Life"
         },
         {
-          "element_name": "Escadas 1",
+          "element_name": "DfD_Stair_SJM_xxxx_Ground_Rammed",
           "ifc_guid": "1fd71949-cb75-42a7-9afa-cb959cb3ec8f-00080bad",
           "ifc_class": "Stairs",
           "DfD_MaterialPassportID": "MP-SJM-2026-0096",
@@ -1942,7 +1942,7 @@
           "DfD_TRACE_Recommendation": "End of Life"
         },
         {
-          "element_name": "Escadas 1",
+          "element_name": "DfD_Stair_SJM_xxxx_Ground_Rammed",
           "ifc_guid": "1fd71949-cb75-42a7-9afa-cb959cb3ec8f-00080d49",
           "ifc_class": "Stairs",
           "DfD_MaterialPassportID": "MP-SJM-2026-0097",
@@ -1967,7 +1967,7 @@
           "DfD_TRACE_Recommendation": "End of Life"
         },
         {
-          "element_name": "Stairs 1",
+          "element_name": "DfD_Stair_SJM_xxxx_Ground_Rammed",
           "ifc_guid": "dc1f43d7-bed3-4b65-a991-4e95bb23a045-0009a702",
           "ifc_class": "Stairs",
           "DfD_MaterialPassportID": "MP-SJM-2026-0098",
@@ -1992,7 +1992,7 @@
           "DfD_TRACE_Recommendation": "End of Life"
         },
         {
-          "element_name": "DfD_Floor_Colonial_SJM_1820_Ground_Rammed",
+          "element_name": "DfD_Floor_Colonial_SJM_XXXX_Ground_Rammed",
           "ifc_guid": "4366c131-2fee-4a7a-a878-abbc01b15194-000b1edd",
           "ifc_class": "Floors",
           "DfD_MaterialPassportID": "MP-SJM-2026-0093",
@@ -2017,7 +2017,7 @@
           "DfD_TRACE_Recommendation": "End of Life"
         },
         {
-          "element_name": "DfD_Floor_Colonial_SJM_1820_Ground_Rammmed",
+          "element_name": "DfD_Floor_Colonial_SJM_XXXX_Ground_Rammmed",
           "ifc_guid": "4366c131-2fee-4a7a-a878-abbc01b15194-000b1f16",
           "ifc_class": "Floors",
           "DfD_MaterialPassportID": "MP-SJM-2026-0092",
